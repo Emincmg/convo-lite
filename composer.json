@@ -1,0 +1,47 @@
+{
+    "name": "emincmg/convo-lite",
+    "description": "A lightweight conversation package for Laravel projects, facilitating smooth chat experiences.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Emin Çomoğlu",
+            "email": "emin-comoglu@hotmail.com",
+            "homepage": "https://emincomoglu.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Emincmg\\ConvoLite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Emincmg\\ConvoLite\\Tests\\": "tests/"
+        }
+    },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
+      ],
+      "aliases": {
+        "Conversation": "Emincmg\\ConvoLite\\Facades\\Conversation"
+      }
+    }
+  },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1",
+        "illuminate/database": "^10.38",
+        "illuminate/http": "^10.48",
+        "illuminate/support": "^10.48"
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    }
+}
