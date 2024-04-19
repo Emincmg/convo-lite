@@ -2,29 +2,47 @@
 
 namespace Emincmg\ConvoLite\Traits;
 
-use Emincmg\ConvoLite\Http\Controllers\Models\Conversation;
-use Illuminate\Http\Request;
+use Emincmg\ConvoLite\Models\Conversation;
+use Exception;
 
 trait CreatesConversations
 {
     /**
-     * Store the conversation request and return the stored conversation's id.
-     * @param Request $request
-     * @return integer
+     * Create a conversation between users.
+     *
+     * @param int $userId
+     * @param int|array $receiverIds
+     * @param string $title
+     * @return Conversation
+     * @throws Exception
      */
-    public function store(Request $request): int
+    static function create(int $userId, int|array $receiverIds, string $title): Conversation
     {
         $conversation = Conversation::create([
-            'title' => $request['title'],
+            'title' => $title,
         ]);
-        $user = User::find($request['user_id']);
-        $receiver = User::find($request['receiver_id']);
-        $request->merge(['conversation_id' => $conversation->id, 'sender_name' => $user['first_name'] . ' ' . $user['last_name']]);
-
-        $this->update($request);
+        $user = config('convo_lite.user_model')::find($userId);
+        if (!$user) {
+            throw new Exception("User not found with ID: $userId");
+        }
         $user->conversations()->save($conversation);
-        $receiver->conversations()->save($conversation);
 
-        return $conversation['id'];
+        if (is_array($receiverIds)) {
+            foreach ($receiverIds as $receiverId) {
+                $receiver = config('convo_lite.user_model')::find($receiverId);
+                if (!$receiver) {
+                    throw new Exception("Receiver not found with ID: $receiverId");
+                }
+                $receiver->conversations()->save($conversation);
+            }
+        } else {
+            $receiver = config('convo_lite.user_model')::find($receiverIds);
+            if (!$receiver) {
+                throw new Exception("Receiver not found with ID: $receiverIds");
+            }
+            $receiver->conversations()->save($conversation);
+        }
+
+        return $conversation;
     }
 }

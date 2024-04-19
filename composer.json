@@ -13,24 +13,21 @@
     ],
     "autoload": {
         "psr-4": {
-            "Emincmg\\ConvoLite\\": "src/"
+            "Emincmg\\ConvoLite\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Emincmg\\ConvoLite\\Tests\\": "tests/"
+            "Emincmg\\ConvoLite\\Tests\\": "tests"
         }
     },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
-      ],
-      "aliases": {
-        "Conversation": "Emincmg\\ConvoLite\\Facades\\Conversation"
-      }
-    }
-  },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev",
     "require": {
         "php": "^8.1",
@@ -43,5 +40,30 @@
         "sort-packages": true,
         "preferred-install": "dist",
         "optimize-autoloader": true
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.8",
+        "orchestra/testbench": "^8.22",
+        "phpunit/phpunit": "^10.5"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
+        ]
     }
 }
