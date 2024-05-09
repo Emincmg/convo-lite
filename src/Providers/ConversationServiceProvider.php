@@ -30,17 +30,20 @@ class ConversationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__) . '/../migrations/';
-        if ($this->app->runningInConsole()) {
-            if (! class_exists('CreateConversationsTable')){
-                $this->publishes([
-                    __DIR__.'/../database/migrations/create_conversations_table.php.stub' =>
-                        database_path('migrations/' . date('Y_m_d_His', time()) . '_create_conversations_table.php'),
-                ],'migrations');
-            }
-            $this->publishes([
-                __DIR__.'/../config/convo-lite.php' => config_path('convo-lite.php'),
-            ], 'config');
-        }
+        $this->publishesMigrations([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ]);
+//        $this->loadMigrationsFrom(__DIR__. '/../migrations/') ;
+//        if ($this->app->runningInConsole()) {
+//            if (! class_exists('CreateConversationsTable')){
+//                $this->publishes([
+//                    __DIR__.'/../database/migrations/create_conversations_table.php.stub' =>
+//                        database_path('migrations/' . date('Y_m_d_His', time()) . '_create_conversations_table.php'),
+//                ],'migrations');
+//            }
+//            $this->publishes([
+//                __DIR__.'/../config/convo-lite.php' => config_path('convo-lite.php'),
+//            ], 'config');
+//        }
     }
 }

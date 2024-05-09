@@ -21,7 +21,7 @@ trait CreatesConversations
         $conversation = Conversation::create([
             'title' => $title,
         ]);
-        $user = config('convo_lite.user_model')::find($userId);
+        $user = config('convo-lite.user_model')::find($userId);
         if (!$user) {
             throw new Exception("User not found with ID: $userId");
         }
@@ -29,14 +29,14 @@ trait CreatesConversations
 
         if (is_array($receiverIds)) {
             foreach ($receiverIds as $receiverId) {
-                $receiver = config('convo_lite.user_model')::find($receiverId);
+                $receiver = config('convo-lite.user_model')::find($receiverId);
                 if (!$receiver) {
                     throw new Exception("Receiver not found with ID: $receiverId");
                 }
                 $receiver->conversations()->save($conversation);
             }
         } else {
-            $receiver = config('convo_lite.user_model')::find($receiverIds);
+            $receiver = config('convo-lite.user_model')::find($receiverIds);
             if (!$receiver) {
                 throw new Exception("Receiver not found with ID: $receiverIds");
             }

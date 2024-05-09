@@ -9,14 +9,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->turnStubsToMigrations();
-
-
-        $this->artisan('migrate', ['--database' => 'testbench'])->run();
-
-        $this->turnMigrationsToStubs();
-
+        $this->artisan('migrate', ['--database' => 'testbench']);
     }
 
     protected function getPackageProviders($app)
@@ -26,8 +19,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
+    protected function getPackageAliases($app)
+    {
+        return ['Conversations'=>'ConvoLite\Facades'];
+    }
+
     protected function getEnvironmentSetUp($app)
     {
+        $app['config']->set('convo-lite', require __DIR__.'/../config/convo-lite.php');
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
             'driver'   => 'sqlite',
@@ -35,32 +34,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'prefix'   => '',
         ]);
 
-    }
-
-    protected function turnStubsToMigrations(): void
-    {
-        $migrationsFolder = __DIR__ . '/../migrations/';
-        $migrations = scandir($migrationsFolder);
-        foreach ($migrations as $migration) {
-            if ($migration === '.' || $migration === '..') continue;
-
-            $newName = str_replace('.php.stub', '.php', $migration);
-
-            rename($migrationsFolder . $migration, $migrationsFolder . $newName);
-        }
-    }
-
-    protected function turnMigrationsToStubs(): void
-    {
-        $migrationsFolder = __DIR__ . '/../migrations/';
-        $migrations = scandir($migrationsFolder);
-        foreach ($migrations as $migration) {
-            if ($migration === '.' || $migration === '..') continue;
-
-            $newName = str_replace('.php', '.php.stub', $migration);
-
-            rename($migrationsFolder . $migration, $migrationsFolder . $newName);
-        }
     }
 
 }
