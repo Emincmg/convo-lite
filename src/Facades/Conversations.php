@@ -4,10 +4,13 @@ namespace Emincmg\ConvoLite\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Conversation extends Facade
+/**
+ * @method create(int|array $userId, int|array $receiverId, string $title)
+ */
+class Conversations extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'conversation';
+        return 'conversations';
     }
 }
