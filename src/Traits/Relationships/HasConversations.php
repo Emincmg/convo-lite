@@ -1,6 +1,6 @@
 <?php
 
-namespace Emincmg\ConvoLite\Traits;
+namespace Emincmg\ConvoLite\Traits\Relationships;
 
 use Emincmg\ConvoLite\Models\Conversation;
 
