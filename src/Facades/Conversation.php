@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  */
 class Conversation extends Facade
 {
-    protected static function getFacadeAccessor(): string
+    protected static function getFacadeAccessor()
     {
         return 'conversation';
     }

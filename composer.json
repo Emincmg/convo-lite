@@ -1,69 +1,72 @@
 {
-    "name": "emincmg/convo-lite",
-    "description": "A lightweight conversation package for Laravel projects, facilitating smooth chat experiences.",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "role": "Developer",
-            "name": "Emin Çomoğlu",
-            "email": "emin-comoglu@hotmail.com",
-            "homepage": "https://emincomoglu.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Emincmg\\ConvoLite\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Emincmg\\ConvoLite\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "dev",
-    "require": {
-        "php": "^8.1",
-        "illuminate/database": "^10.38",
-        "illuminate/http": "^10.48",
-        "illuminate/support": "^10.48"
-    },
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true,
-        "preferred-install": "dist",
-        "optimize-autoloader": true
-    },
-    "require-dev": {
-        "nunomaduro/collision": "^7.8",
-        "orchestra/testbench": "^8.22",
-        "phpunit/phpunit": "^10.5"
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@clear",
-            "@prepare"
-        ],
-        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
-        "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": "@php vendor/bin/testbench workbench:build --ansi",
-        "serve": [
-            "Composer\\Config::disableProcessTimeout",
-            "@build",
-            "@php vendor/bin/testbench serve"
-        ],
-        "lint": [
-            "@php vendor/bin/phpstan analyse"
-        ],
-        "test": [
-            "@php vendor/bin/phpunit"
-        ]
+  "name": "emincmg/convo-lite",
+  "description": "A lightweight conversation package for Laravel projects, facilitating smooth chat experiences.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "role": "Developer",
+      "name": "Emin Çomoğlu",
+      "email": "emin-comoglu@hotmail.com",
+      "homepage": "https://emincomoglu.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Emincmg\\ConvoLite\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Emincmg\\ConvoLite\\Tests\\": "tests",
+      "Workbench\\App\\": "workbench/app/",
+      "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+      "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
+      ],
+      "aliases": {
+        "Conversations": "Emincmg\\ConvoLite\\Facades\\Conversations"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^8.1"
+  },
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "require-dev": {
+    "nunomaduro/collision": "^7.8",
+    "orchestra/testbench": "^8.22",
+    "phpunit/phpunit": "^10.5"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "@clear",
+      "@prepare"
+    ],
+    "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+    "prepare": "@php vendor/bin/testbench package:discover --ansi",
+    "build": "@php vendor/bin/testbench workbench:build --ansi",
+    "serve": [
+      "Composer\\Config::disableProcessTimeout",
+      "@build",
+      "@php vendor/bin/testbench serve"
+    ],
+    "lint": [
+      "@php vendor/bin/phpstan analyse"
+    ],
+    "test": [
+      "@php vendor/bin/phpunit"
+    ]
+  }
 }

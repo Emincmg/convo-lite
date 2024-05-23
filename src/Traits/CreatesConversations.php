@@ -16,7 +16,7 @@ trait CreatesConversations
      * @return Conversation
      * @throws Exception
      */
-    static function create(int $userId, int|array $receiverIds, string $title): Conversation
+    public function create(int $userId, int|array $receiverIds, string $title): Conversation
     {
         $conversation = Conversation::create([
             'title' => $title,
