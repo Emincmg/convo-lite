@@ -46,7 +46,6 @@
   },
   "require-dev": {
     "nunomaduro/collision": "^7.8",
-    "orchestra/testbench": "^8.22",
     "phpunit/phpunit": "^10.5"
   },
   "scripts": {

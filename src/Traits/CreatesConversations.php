@@ -11,38 +11,41 @@ trait CreatesConversations
      * Create a conversation between users.
      *
      * @param int $userId
-     * @param int|array $receiverIds
+     * @param array|int $receiverIds
      * @param string $title
      * @return Conversation
      * @throws Exception
      */
-    public function create(int $userId, int|array $receiverIds, string $title): Conversation
+    public function create(int $userId, array|int $receiverIds, string $title): Conversation
     {
         $conversation = Conversation::create([
             'title' => $title,
         ]);
-        $user = config('convo_lite.user_model')::find($userId);
-        if (!$user) {
+        $user = $this->getUserInstance($userId);
+
+        if (! $user) {
             throw new Exception("User not found with ID: $userId");
         }
+
         $user->conversations()->save($conversation);
 
-        if (is_array($receiverIds)) {
-            foreach ($receiverIds as $receiverId) {
-                $receiver = config('convo_lite.user_model')::find($receiverId);
-                if (!$receiver) {
-                    throw new Exception("Receiver not found with ID: $receiverId");
-                }
-                $receiver->conversations()->save($conversation);
-            }
-        } else {
-            $receiver = config('convo_lite.user_model')::find($receiverIds);
-            if (!$receiver) {
-                throw new Exception("Receiver not found with ID: $receiverIds");
+        if (!is_array($receiverIds)) {
+            $receiverIds = [$receiverIds];
+        }
+
+        foreach ($receiverIds as $receiverId) {
+            $receiver = $this->getUserInstance($receiverId);
+            if (! $receiver) {
+                throw new Exception("Receiving user not found with ID: $receiverId");
             }
             $receiver->conversations()->save($conversation);
         }
 
         return $conversation;
+    }
+
+    private function getUserInstance(int $userId)
+    {
+        return config('convo-lite.user_model')::find($userId);
     }
 }
