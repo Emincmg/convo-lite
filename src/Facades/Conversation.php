@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method create(int|array $userId, int|array $receiverId, string $title)
  */
-class Conversations extends Facade
+class Conversation extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'conversations';
+        return 'conversation';
     }
 }
