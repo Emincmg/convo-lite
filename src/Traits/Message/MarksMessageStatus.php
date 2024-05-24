@@ -1,6 +1,6 @@
 <?php
 
-namespace Emincmg\ConvoLite\Traits;
+namespace Emincmg\ConvoLite\Traits\Message;
 
 use Emincmg\ConvoLite\Models\Message;
 
@@ -8,6 +8,7 @@ trait MarksMessageStatus
 {
     /**
      * Mark message as read/unread. True if read, false if unread.
+     *
      * @param int $messageId
      * @param int $id
      * @param bool $status

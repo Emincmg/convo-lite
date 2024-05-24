@@ -30,7 +30,7 @@
         "Emincmg\\ConvoLite\\Providers\\ConversationServiceProvider"
       ],
       "aliases": {
-        "Conversations": "Emincmg\\ConvoLite\\Facades\\Conversations"
+        "Convo": "Emincmg\\ConvoLite\\Facades\\Convo"
       }
     }
   },

@@ -2,17 +2,20 @@
 
 namespace Emincmg\ConvoLite\Models;
 
-use Emincmg\ConvoLite\Traits\SendsMessage;
+use Emincmg\ConvoLite\Traits\Conversation\SetsStatus;
+use Emincmg\ConvoLite\Traits\Conversation\SetsTitle;
+use Emincmg\ConvoLite\Traits\Message\SendsMessage;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use SendsMessage;
+    use SendsMessage, SetsTitle, SetsStatus;
 
     protected $fillable=
         [
             'title',
-            'status'
+            'status',
+            'has_new_message'
         ];
 
     public function users()

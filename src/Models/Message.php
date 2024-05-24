@@ -2,7 +2,7 @@
 
 namespace Emincmg\ConvoLite\Models;
 
-use Emincmg\ConvoLite\Traits\AttachesFiles;
+use Emincmg\ConvoLite\Traits\Message\AttachesFiles;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->string('filename')->nullable();
             $table->string('file_full_path')->nullable();
             $table->string('sender_name');

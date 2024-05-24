@@ -3,7 +3,7 @@
 namespace Emincmg\ConvoLite\Providers;
 
 use Emincmg\ConvoLite\Commands\PublishMigrationsCommand;
-use Emincmg\ConvoLite\Conversations;
+use Emincmg\ConvoLite\Convo;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,8 +14,8 @@ class ConversationServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('conversations', function () {
-            return new Conversations();
+        $this->app->singleton('convo', function () {
+            return new Convo();
         });
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/convo-lite.php', 'convo-lite'

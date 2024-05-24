@@ -1,14 +1,15 @@
 <?php
 
-namespace Emincmg\ConvoLite\Traits;
+namespace Emincmg\ConvoLite\Traits\Message;
 
 use Illuminate\Support\Facades\Storage;
 
 trait AttachesFiles
 {
     /**
-     * Attaches files to a message. Accepts an array of UploadedFile model.
-     * @param array $files
+     * Attach files to the application.
+     *
+     * @param array $files An array of files to attach.
      * @return void
      */
     public function attachFiles(array $files): void

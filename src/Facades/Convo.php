@@ -5,12 +5,16 @@ namespace Emincmg\ConvoLite\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method create(int|array $userId, int|array $receiverId, string $title)
+ * Class Conversation
+ *
+ * @package Symfony\App\Facade
+ *
+ * @method ConversationQuery create()
  */
-class Conversation extends Facade
+class Convo extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'conversation';
+        return 'convo';
     }
 }
