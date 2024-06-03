@@ -3,7 +3,9 @@
 namespace Emincmg\ConvoLite;
 
 use Emincmg\ConvoLite\Models\Conversation;
-use Emincmg\ConvoLite\Traits\Conversation\GetsUserInstance;
+use Emincmg\ConvoLite\Models\Message;
+use Emincmg\ConvoLite\Traits\GetsUserInstance;
+use Illuminate\Http\UploadedFile;
 
 class Convo
 {
@@ -23,9 +25,9 @@ class Convo
         $conversation = Conversation::create([
             'title' => $title,
         ]);
-        $user = $this->getUserInstance($userId);
+        $user = self::getUserInstance($userId);
 
-        if (! $user) {
+        if (!$user) {
             throw new Exception("User not found with ID: $userId");
         }
 
@@ -36,8 +38,8 @@ class Convo
         }
 
         foreach ($receiverIds as $receiverId) {
-            $receiver = $this->getUserInstance($receiverId);
-            if (! $receiver) {
+            $receiver = self::getUserInstance($receiverId);
+            if (!$receiver) {
                 throw new Exception("Receiving user not found with ID: $receiverId");
             }
             $receiver->conversations()->save($conversation);
@@ -89,8 +91,29 @@ class Convo
      * @param Conversation $conversation The conversation that its messages will be returned.
      * @return \Illuminate\Support\Collection The collection of messages of the conversation.
      */
-    public static function getMessagesByConversation(Conversation $conversation):\Illuminate\Support\Collection
+    public static function getMessagesByConversation(Conversation $conversation): \Illuminate\Support\Collection
     {
         return $conversation->messages;
+    }
+
+    public static function sendMessage(Conversation|int $conversation, Message|string|null $message = null, mixed $user): Conversation
+    {
+        $userModel = config('convo-lite.user_model');
+        if (is_int($conversation)) {
+            $conversation = Conversation::findOrFail($conversation);
+        }
+
+        if (is_string($message)) {
+            $message = new Message();
+            $message->body = $message;
+        }
+
+        if ($user instanceof $userModel) {
+            $user->messages()->save($message);
+        } else if (is_int($userModel)) {
+            $user = self::getUserInstance($user);
+            $user->messages()->save($message);
+            $conversation->messages()->save($message);
+        }
     }
 }

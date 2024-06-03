@@ -1,7 +1,8 @@
 <?php
-namespace Emincmg\ConvoLite\Traits\Conversation;
+namespace Emincmg\ConvoLite\Traits;
 
 use Emincmg\ConvoLite\Http\Controllers\Models\Conversation;
+use function Emincmg\ConvoLite\Traits\Conversation\config;
 
 trait GetsUserInstance
 {
@@ -11,7 +12,7 @@ trait GetsUserInstance
      * @param int $userId The ID of the user.
      * @return User|null The user instance if found, or null if not found.
      */
-    private function getUserInstance(int $userId)
+    private static function getUserInstance(int $userId)
     {
         return config('convo-lite.user_model')::find($userId);
     }

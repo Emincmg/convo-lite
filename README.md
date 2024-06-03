@@ -65,7 +65,7 @@ $conversation->setTitle('Test Title');
 or just create the conversation with title included.
 
 ```php
- Convo::createConversation({senderId}, {receiverId(s),'Test Title');
+ Convo::createConversation($senderId,$receiverIds,'Test Title');
 ```
  
 both will return the same thing;
@@ -89,7 +89,7 @@ $conversation = Convo::getConversationByTitle('Title')
 
 ```php
 $conversation = Convo::getConversationById(1);
-$message = new Message('hello')
+$message = Convo::sendMessage($conversation,$message,$sender)
 ```
 ### Get messages
 Get by conversation model
