@@ -13,22 +13,19 @@ composer require emincmg/convo-lite
 
 ## Configuration
 
-After the package is installed, add the service provider to the `providers` array in your `config/app.php` file:
-
-```php
-'providers' => [
-    // Other service providers
-
-    ConvoLite\ConversationServiceProvider::class,
-],
-```
-
 Publish the package's publishable files by running the following command:
 
 ```bash
 php artisan vendor:publish --provider="Emincmg\ConvoLite\Providers\ConversationServiceProvider"
 ```
+This will publish the migrations and 
+### Changing Default Model
 
+You can change the default model for creating conversations between them through `config/convo_lite.php`
+```php
+'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
+```
+This defaults to your applications default model, so you can change that or if you only change for this package change this field.
 ## Database Migrations
 
 Run the migrations to create the necessary database tables:
@@ -39,7 +36,7 @@ php artisan migrate
 
 ## Usage
 
-To start using Convo Lite, you can add some basic routes and controller methods to manage chat rooms and messages. Here is an example usage:
+To start using Convo Lite, you can add some basic routes and controller methods to manage conversations and messages. Here is an example usage:
 
 ### Creating a conversation
 
@@ -54,7 +51,12 @@ Convo::createConversation($senderId,$receiverIds);
 This will return the conversation that has just been created; 
 
 ```json
-{"title":null,"updated_at":"2024-06-03T06:56:20.000000Z","created_at":"2024-06-03T06:56:20.000000Z","id":15}
+{
+    "title":null,
+    "updated_at":"2024-06-03T06:56:20.000000Z",
+    "created_at":"2024-06-03T06:56:20.000000Z",
+    "id":15
+}
 ```
 To set a title for conversation, you could either;
 
@@ -71,7 +73,12 @@ or just create the conversation with title included.
 both will return the same thing;
 
 ```json
-{"title":"Test Title","updated_at":"2024-06-03T06:56:20.000000Z","created_at":"2024-06-03T06:56:20.000000Z","id":15}
+{
+    "title":"Test Title",
+    "updated_at":"2024-06-03T06:56:20.000000Z",
+    "created_at":"2024-06-03T06:56:20.000000Z",
+    "id":15
+}
 ```
 
 ### Get a conversation
