@@ -19,7 +19,7 @@ class Convo
      */
     public function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Convo
     {
-        $conversation = Convo::create([
+        $conversation = Conversation::create([
             'title' => $title,
         ]);
         $user = $this->getUserInstance($userId);
