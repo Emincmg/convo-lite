@@ -18,10 +18,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Emincmg\\ConvoLite\\Tests\\": "tests",
-      "Workbench\\App\\": "workbench/app/",
-      "Workbench\\Database\\Factories\\": "workbench/database/factories/",
-      "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+      "Emincmg\\ConvoLite\\Tests\\": "tests"
     }
   },
   "extra": {
@@ -45,21 +42,12 @@
     "optimize-autoloader": true
   },
   "require-dev": {
-    "nunomaduro/collision": "^7.8",
-    "phpunit/phpunit": "^10.5"
+    "nunomaduro/collision": "^7.8"
   },
   "scripts": {
     "post-autoload-dump": [
       "@clear",
       "@prepare"
-    ],
-    "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
-    "prepare": "@php vendor/bin/testbench package:discover --ansi",
-    "build": "@php vendor/bin/testbench workbench:build --ansi",
-    "serve": [
-      "Composer\\Config::disableProcessTimeout",
-      "@build",
-      "@php vendor/bin/testbench serve"
     ],
     "lint": [
       "@php vendor/bin/phpstan analyse"
