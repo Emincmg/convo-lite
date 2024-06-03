@@ -17,8 +17,7 @@ class Convo
      * @param array|int $receiverIds The ID(s) of the user(s) who will receive the conversation.
      * @param string|null $title The title of the conversation.
      *
-     * @return Convo The created conversation.
-     *
+     * @return Conversation The created conversation.
      */
     public function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Conversation
     {
