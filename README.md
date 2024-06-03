@@ -1,6 +1,4 @@
-Tabii ki, işte İngilizce olarak hazırlanmış bir README.md dosyası:
 
-```markdown
 # Convo Lite
 
 Convo Lite is a package that allows you to easily create and manage chat rooms in your Laravel application. This package enables your users to communicate with each other in real-time.
