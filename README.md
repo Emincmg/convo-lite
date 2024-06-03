@@ -26,7 +26,7 @@ After the package is installed, add the service provider to the `providers` arra
 Publish the package's publishable files by running the following command:
 
 ```bash
-php artisan vendor:publish --provider="ConvoLite\ConversationServiceProvider"
+php artisan vendor:publish --provider="Emincmg\ConvoLite\Providers\ConversationServiceProvider"
 ```
 
 ## Database Migrations
