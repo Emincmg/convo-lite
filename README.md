@@ -82,7 +82,25 @@ $conversation = Convo::getConversationById(1);
 ```
 Get by title
 ```php
-$conversation = Convo::getConversationByTitle()
+$conversation = Convo::getConversationByTitle('Title')
+```
+
+### Sending message
+
+```php
+$conversation = Convo::getConversationById(1);
+$message = new Message('hello')
+```
+### Get messages
+Get by conversation model
+```php
+$conversation = Convo::getConversationById(1);
+$messages = Convo::getMessagesByConversation($conversation);
+```
+or,
+```php
+$conversation = Convo::getConversationById(1);
+$conversation->messages;
 ```
 ## License
 
