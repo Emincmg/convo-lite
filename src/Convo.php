@@ -69,7 +69,7 @@ class Convo
      */
     public static function getById(int $id): Convo
     {
-        return Convo::findOrFail($id);
+        return Conversation::findOrFail($id);
     }
 
     /**
@@ -80,6 +80,6 @@ class Convo
      */
     public static function getByTitle(string $title): ?Convo
     {
-        return Convo::where('title', $title)->first();
+        return Conversation::where('title', $title)->first();
     }
 }
