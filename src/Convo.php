@@ -2,10 +2,13 @@
 
 namespace Emincmg\ConvoLite;
 
+use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Traits\Conversation\CreatesConversations;
+use Emincmg\ConvoLite\Traits\Conversation\GetsUserInstance;
 
 class Convo
 {
+    use GetsUserInstance;
 
     /**
      * Creates a new conversation.
@@ -17,7 +20,7 @@ class Convo
      * @return Convo The created conversation.
      *
      */
-    public function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Convo
+    public function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Conversation
     {
         $conversation = Conversation::create([
             'title' => $title,
