@@ -56,16 +56,20 @@ This will return the conversation that has just been created;
 To set a title for conversation, you could either;
 
 ```php
-    $conversation = Convo::createConversation({senderId}, {receiverId(s)});
-    $conversation->setTitle('Test Title');
+$conversation = Convo::createConversation({senderId}, {receiverId(s)});
+$conversation->setTitle('Test Title');
 ```
 or just create the conversation with title included.
 
 ```php
  Convo::createConversation({senderId}, {receiverId(s),'Test Title');
 ```
+ 
+both will return the same thing;
 
-
+```json
+{"title":"Test Title","updated_at":"2024-06-03T06:56:20.000000Z","created_at":"2024-06-03T06:56:20.000000Z","id":15}
+```
 ## Contributing
 
 Thank you for considering contributing to Convo Lite! You can read the contribution guide [here](CONTRIBUTING.md).
