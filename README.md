@@ -26,7 +26,7 @@ You can change the default model for creating conversations between them through
 'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
 ```
 This defaults to your applications default model, so you can change that or if you only change for this package change this field.
-## Database Migrations
+### Migrations
 
 Run the migrations to create the necessary database tables:
 
