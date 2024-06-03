@@ -41,9 +41,7 @@ php artisan migrate
 
 To start using Convo Lite, you can add some basic routes and controller methods to manage chat rooms and messages. Here is an example usage:
 
-### Creating a Chat Room
-
-Create a conversation:
+### Creating a conversation
 
 ```php
  Conversation::createConversation({senderId}, {receiverId(s)});
