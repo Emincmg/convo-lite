@@ -3,7 +3,6 @@
 namespace Emincmg\ConvoLite;
 
 use Emincmg\ConvoLite\Models\Conversation;
-use Emincmg\ConvoLite\Traits\Conversation\CreatesConversations;
 use Emincmg\ConvoLite\Traits\Conversation\GetsUserInstance;
 
 class Convo
