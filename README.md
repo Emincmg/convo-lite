@@ -46,7 +46,10 @@ To start using Convo Lite, you can add some basic routes and controller methods 
 Receiver could be both integer or array if multiple. If multiple receiver provided, more than one conversation will be created between sender and receivers.
 
 ```php
-Convo::createConversation({senderId}, {receiverId(s)});
+$senderId= 1;
+$receiverIds = [2,3];
+
+Convo::createConversation($senderId,$receiverIds);
 ```
 This will return the conversation that has just been created; 
 
@@ -56,7 +59,7 @@ This will return the conversation that has just been created;
 To set a title for conversation, you could either;
 
 ```php
-$conversation = Convo::createConversation({senderId}, {receiverId(s)});
+$conversation = Convo::createConversation($senderId,$receiverIds);
 $conversation->setTitle('Test Title');
 ```
 or just create the conversation with title included.
@@ -70,10 +73,17 @@ both will return the same thing;
 ```json
 {"title":"Test Title","updated_at":"2024-06-03T06:56:20.000000Z","created_at":"2024-06-03T06:56:20.000000Z","id":15}
 ```
-## Contributing
 
-Thank you for considering contributing to Convo Lite! You can read the contribution guide [here](CONTRIBUTING.md).
+### Get a conversation
 
+Get by id
+```php
+$conversation = Convo::getConversationById(1);
+```
+Get by title
+```php
+$conversation = Convo::getConversationByTitle()
+```
 ## License
 
 Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
