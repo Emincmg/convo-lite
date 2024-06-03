@@ -88,5 +88,3 @@ $conversation = Convo::getConversationByTitle()
 
 Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
 ```
-
-This README provides basic installation, configuration, and usage instructions for the Convo Lite package. You can copy this and save it as `README.md` in your project.
