@@ -40,7 +40,7 @@ To start using Convo Lite, you can add some basic routes and controller methods 
 
 ### Creating a conversation
 
-Receiver could be both integer or array if multiple. If multiple receiver provided, more than one conversation will be created between sender and receivers.
+Receiver could be both integer or array if multiple. If multiple receiver provided, conversation will be created between them.
 
 ```php
 $senderId= 1;
@@ -96,7 +96,13 @@ $conversation = Convo::getConversationByTitle('Title')
 
 ```php
 $conversation = Convo::getConversationById(1);
+$sender = User::find(1);
+$message = new Message('Test Message',$user)
 $message = Convo::sendMessage($conversation,$message,$sender)
+```
+or;
+```php
+$message = Convo::sendMessage(1,'Test Message',1)
 ```
 ### Get messages
 Get by conversation model
