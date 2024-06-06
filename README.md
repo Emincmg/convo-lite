@@ -60,12 +60,14 @@ Convo::createConversation($senderId,$receiverIds);
 This will return the conversation that has just been created;
 
 ```json
-{
-    "title": null,
-    "updated_at": "2024-06-03T06:56:20.000000Z",
-    "created_at": "2024-06-03T06:56:20.000000Z",
-    "id": 15
-}
+[
+    {
+        "title": null,
+        "updated_at": "2024-06-06T14:18:50.000000Z",
+        "created_at": "2024-06-06T14:18:50.000000Z",
+        "id": 1
+    }
+]
 ```
 
 To set a title for conversation, you could either;
@@ -84,12 +86,14 @@ or just create the conversation with title included.
 both will return the same thing;
 
 ```json
-{
-    "title": "Test Title",
-    "updated_at": "2024-06-03T06:56:20.000000Z",
-    "created_at": "2024-06-03T06:56:20.000000Z",
-    "id": 15
-}
+[
+    {
+        "title": "Test Title",
+        "updated_at": "2024-06-06T14:18:50.000000Z",
+        "created_at": "2024-06-06T14:18:50.000000Z",
+        "id": 1
+    }
+]
 ```
 
 if more than one receivers are provided, response will be a collection of conversations that has been created.

@@ -51,6 +51,12 @@ class ConversationServiceProvider extends ServiceProvider
                 __DIR__ . '/../../migrations/create_messages_table.php' =>
                     $this->app->databasePath('migrations' .
                         DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_messages_table.php'),], 'migrations');
+
+            $now->addSecond();
+            $this->publishes([
+                __DIR__ . '/../../migrations/create_attachments_table.php' =>
+                    $this->app->databasePath('migrations' .
+                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_attachments_table.php'),], 'migrations');
         }
     }
 }
