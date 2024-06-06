@@ -30,7 +30,6 @@ class Message extends Model
     {
         return [
             'read_by_id' => 'array',
-            'files'=>'array'
         ];
     }
 

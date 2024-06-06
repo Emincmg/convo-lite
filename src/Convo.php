@@ -2,7 +2,6 @@
 
 namespace Emincmg\ConvoLite;
 
-use Cassandra\Collection;
 use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
 use Emincmg\ConvoLite\Traits\GetsUserInstance;
@@ -85,7 +84,7 @@ class Convo
      * @param Conversation|int $conversation Conversation model or its id.
      * @return Collection Collection of attachments.
      */
-    public static function getConversationAttachments(Conversation|int $conversation): Collection
+    public static function getConversationAttachments(Conversation|int $conversation): \Illuminate\Support\Collection
     {
         if (is_int($conversation)) {
             $conversation = Conversation::findOrFail($conversation);
@@ -121,35 +120,42 @@ class Convo
      *
      * @param Conversation|int $conversation Conversation that message will be sent to. Can be an instance of Conversation or its id.
      * @param mixed $user Message sender. Can be user id or direct model of the sender.
-     * @param Message|string|null $message Message that will be sent. Can be string or Message instance.
-     * @param UploadedFile|array|null $file File(s) that will be attached to the message. Can be array of files or a file.
+     * @param string $messageContent Message body that will be sent.
+     * @param UploadedFile|array|null $file File(s) that will be attached to the message. Can be an array of files or a file.
      * @return Message Message resource that will be returned.
      */
-    public static function sendMessage(Conversation|int $conversation, mixed $user, Message|string|null $message = null, UploadedFile|array|null $file = null): Message
+    public static function sendMessage(Conversation|int $conversation, mixed $user, string $messageContent, UploadedFile|array|null $file = null): Message
     {
-        $userModel = config('convo-lite.user_model');
+        $message = new Message();
+        $message->body = $messageContent;
 
         if (is_int($conversation)) {
             $conversation = Conversation::findOrFail($conversation);
         }
 
-        if (is_string($message)) {
-            $message = new Message();
-            $message->body = $message;
+        $message->conversation_id = $conversation->id;
+
+        if (is_int($user)) {
+            $user = self::getUserInstance($user);
         }
+
+        if (!$user) {
+            throw new Exception("User not found.");
+        }
+
+        $message->user_id = $user->id;
 
         if ($file) {
             $message->attachFiles($file);
         }
 
-        if ($user instanceof $userModel) {
-            $user->messages()->save($message);
-        } else if (is_int($userModel)) {
-            $user = self::getUserInstance($user);
-            $user->messages()->save($message);
-            $conversation->messages()->save($message);
-        }
+        $message->save();
 
         return $message;
+    }
+
+    public static function sendMessageAnd()
+    {
+
     }
 }
