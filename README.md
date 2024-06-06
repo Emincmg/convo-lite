@@ -19,7 +19,7 @@ Publish the package's publishable files by running the following command:
 php artisan vendor:publish --provider="Emincmg\ConvoLite\Providers\ConversationServiceProvider"
 ```
 
-This will publish the migrations and
+This will publish the migration fies to your applications `database/migrations` folder, and config file to your applications `config` folder.
 
 ### Changing Default Model
 
