@@ -73,7 +73,7 @@ This will return the conversation that has just been created;
 To set a title for conversation, you could either;
 
 ```php
-$conversation = Convo::createConversation($senderId,$receiverIds);
+$conversation = Convo::getConversationById(1);
 $conversation->setTitle('Test Title');
 ```
 
