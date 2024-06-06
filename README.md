@@ -108,7 +108,7 @@ Get by title
 $conversation = Convo::getConversationByTitle('Title')
 ```
 
-### Attach Participators
+### Add Participators
 
 You can attach participators to an existing conversation by;
 
@@ -116,14 +116,14 @@ You can attach participators to an existing conversation by;
 $conversation = Convo::getConversationById(1);
 $userId = 1;
 
-Convo::attachParticipators($conversation, $userIds)
+Convo::addParticipators($conversation, $userIds)
 ````
 or you can send only the ID of the conversation;
 ````php
 $conversationId = 1;
 $userIds = [1,2,3,4];
 
-Convo::attachParticipators($conversationId, $userIds)
+Convo::addParticipators($conversationId, $userIds)
 ````
 
 you can add multiple participators as well;
@@ -132,7 +132,7 @@ you can add multiple participators as well;
 $conversationId = 1;
 $userIds = [1,2,3,4];
 
-Convo::attachParticipators($conversationId, $userIds)
+Convo::addParticipators($conversationId, $userIds)
 ````
 
 ### Send Message

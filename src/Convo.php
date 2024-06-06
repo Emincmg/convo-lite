@@ -4,13 +4,14 @@ namespace Emincmg\ConvoLite;
 
 use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
+use Emincmg\ConvoLite\Traits\Conversation\GetsConversationInstance;
 use Emincmg\ConvoLite\Traits\GetsUserInstance;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 class Convo
 {
-    use GetsUserInstance;
+    use GetsUserInstance, GetsConversationInstance;
 
     /**
      * Creates a new conversation.
@@ -19,9 +20,10 @@ class Convo
      * @param array|int $receiverIds The ID(s) of the user(s) who will receive the conversation.
      * @param string|null $title The title of the conversation.
      *
-     * @return Conversation The created conversation.
+     * @return \Illuminate\Support\Collection Collection containing created conversations.
+     * @throws \Exception If not found user with given ID.
      */
-    public static function createConversation(int $creatorId, array|int $receiverIds, ?string $title = null): Conversation
+    public static function createConversation(int $creatorId, array|int $receiverIds, ?string $title = null): \Illuminate\Support\Collection
     {
         $conversations = collect();
 
@@ -49,16 +51,42 @@ class Convo
     }
 
     /**
-     * Attach user(s) to a conversation.
+     * Add user(s) to a conversation.
      *
      * @param Conversation|int $conversation Conversation that user(s) will be attached.
      * @param int|array $users Array of user IDs or user instances.
-     * @throws \Exception
+     * @throws \Exception If no conversation is found with given ID.
      */
-    public static function attachParticipators(Conversation|int $conversation, int|array $users): void
+    public static function addParticipators(Conversation|int $conversation, int|array $users): void
+    {
+        self::manageParticipants($conversation, $users, 'attach');
+    }
+
+    /**
+     * Remove user(s) from a conversation.
+     *
+     * @param Conversation|int $conversation Conversation that user(s) will be attached.
+     * @param int|array $users Array of user IDs or user instances.
+     * @throws \Exception If no conversation is found with given ID.
+     */
+    public static function removeParticipators(Conversation|int $conversation, int|array $users): void
+    {
+        self::manageParticipants($conversation, $users, 'detach');
+    }
+
+    /**
+     * Manage attaching/detaching participators from a conversation.
+     *
+     * @param Conversation|int $conversation Conversation that user(s) will be attached/detached.
+     * @param int|array $users Array of user IDs or user instances.
+     * @param string $intent Intent of calling. Can be either attach or detach.
+     * @return void
+     * @throws \Exception If no conversation is found with given ID.
+     */
+    private static function manageParticipants(Conversation|int $conversation, int|array $users, string $intent): void
     {
         if (is_int($conversation)) {
-            $conversation = Conversation::findOrFail($conversation);
+            $conversation = self::getConversationInstance($conversation);
         }
 
         if (!is_array($users)) {
@@ -73,8 +101,12 @@ class Convo
             }
             $userIds[] = $user;
         }
+        if ($intent === 'attach') {
+            $conversation->users()->attach($userIds);
+        } else {
+            $conversation->users()->detach($userIds);
+        }
 
-        $conversation->users()->attach($userIds);
     }
 
 
@@ -90,7 +122,7 @@ class Convo
     public static function markConversationStatus(Conversation|int $conversation, string $param): void
     {
         if (is_int($conversation)) {
-            $conversation = Conversation::findOrFail($conversation);
+            $conversation = self::getConversationInstance($conversation);
         }
         $conversation->update(['status' => $param]);
     }
@@ -104,7 +136,7 @@ class Convo
      */
     public static function getConversationById(int $id): Conversation
     {
-        return Conversation::findOrFail($id);
+        return self::getConversationInstance($id);
     }
 
 
@@ -117,7 +149,7 @@ class Convo
     public static function getConversationAttachments(Conversation|int $conversation): \Illuminate\Support\Collection
     {
         if (is_int($conversation)) {
-            $conversation = Conversation::findOrFail($conversation);
+            $conversation = self::getConversationInstance($conversation);
         }
 
         return $conversation->attachments;
@@ -160,7 +192,7 @@ class Convo
         $message->body = $messageContent;
 
         if (is_int($conversation)) {
-            $conversation = Conversation::findOrFail($conversation);
+            $conversation = self::getConversationInstance($conversation);
         }
 
         $message->conversation_id = $conversation->id;
@@ -182,10 +214,5 @@ class Convo
         $message->save();
 
         return $message;
-    }
-
-    public static function sendMessageAnd()
-    {
-
     }
 }
