@@ -108,13 +108,40 @@ Get by title
 $conversation = Convo::getConversationByTitle('Title')
 ```
 
+### Attach Participators
+
+You can attach participators to an existing conversation by;
+
+````php
+$conversation = Convo::getConversationById(1);
+$userId = 1;
+
+Convo::attachParticipators($conversation, $userIds)
+````
+or you can send only the ID of the conversation;
+````php
+$conversationId = 1;
+$userIds = [1,2,3,4];
+
+Convo::attachParticipators($conversationId, $userIds)
+````
+
+you can add multiple participators as well;
+
+````php
+$conversationId = 1;
+$userIds = [1,2,3,4];
+
+Convo::attachParticipators($conversationId, $userIds)
+````
+
 ### Send Message
 
 Send a message by facade (files are optional);
 
 ```php
-$conversation = Convo::getConversationById(1);
-$message = Convo::sendMessage($conversation->id,$user,'hello',$request->files());
+$conversationId = 1;
+$message = Convo::sendMessage($conversationId,$user,'hello',$request->files());
 ```
 or you can pass conversation instance directly.
 ````php
