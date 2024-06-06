@@ -92,6 +92,8 @@ both will return the same thing;
 }
 ```
 
+if more than one receivers are provided, response will be a collection of conversations that has been created.
+
 ### Get a conversation
 
 Get by id
