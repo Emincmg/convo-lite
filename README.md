@@ -121,9 +121,9 @@ Convo::addParticipators($conversation, $userIds)
 or you can send only the ID of the conversation;
 ````php
 $conversationId = 1;
-$userIds = [1,2,3,4];
+$userId = 1;
 
-Convo::addParticipators($conversationId, $userIds)
+Convo::addParticipators($conversationId, $userId)
 ````
 
 you can add multiple participators as well;
