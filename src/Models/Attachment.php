@@ -5,7 +5,7 @@ namespace Emincmg\ConvoLite\Models;
 use Emincmg\ConvoLite\Traits\Message\AttachesFiles;
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Attachment extends Model
 {
     use AttachesFiles;
 
@@ -14,12 +14,15 @@ class Message extends Model
      * @var string[]
      */
     protected $fillable=[
-        'body',
+        'name',
         'user_id',
         'conversation_id',
-        'files',
-        'sender_name',
-        'read_by_id',
+        'message_id',
+        'name',
+        'full_path',
+        'storage_path',
+        'public_path',
+        'read_by_user_id',
     ];
 
     /**
@@ -29,8 +32,7 @@ class Message extends Model
     protected function casts(): array
     {
         return [
-            'read_by_id' => 'array',
-            'files'=>'array'
+            'read_by_user_id' => 'array',
         ];
     }
 
@@ -44,8 +46,8 @@ class Message extends Model
         return $this->belongsTo(config('convo-lite.user_model'));
     }
 
-    public function attachments()
+    public function message()
     {
-        return $this->hasMany(Attachment::class);
+        return $this->belongsTo(Message::class);
     }
 }

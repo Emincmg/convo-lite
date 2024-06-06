@@ -2,7 +2,6 @@
 namespace Emincmg\ConvoLite\Traits;
 
 use Emincmg\ConvoLite\Http\Controllers\Models\Conversation;
-use function Emincmg\ConvoLite\Traits\Conversation\config;
 
 trait GetsUserInstance
 {

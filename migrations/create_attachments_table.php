@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('body')->nullable();
-            $table->string('sender_name');
+            $table->string('name')->nullable();
+            $table->string('full_path')->nullable();
+            $table->string('storage_path')->nullable();
+            $table->string('public_path')->nullable();
             $table->json('read_by_user_id');
 
             $table->unsignedBigInteger('conversation_id');
-            $table->unsignedBigInteger('attachment_id');
+            $table->unsignedBigInteger('message_id');
             $table->unsignedBigInteger('user_id');
         });
     }
