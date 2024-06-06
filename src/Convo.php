@@ -6,47 +6,53 @@ use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
 use Emincmg\ConvoLite\Traits\GetsUserInstance;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 
 class Convo
 {
     use GetsUserInstance;
 
     /**
-     * Creates a new conversation.
+     * Creates new conversations.
      *
      * @param int $userId The ID of the user creating the conversation.
      * @param array|int $receiverIds The ID(s) of the user(s) who will receive the conversation.
      * @param string|null $title The title of the conversation.
      *
-     * @return Conversation The created conversation.
+     * @return Conversation|\Illuminate\Support\Collection The created conversation or a collection of conversations.
      */
-    public static function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Conversation
+    public static function createConversation(int $userId, array|int $receiverIds, ?string $title = null): Conversation|\Illuminate\Support\Collection
     {
-        $conversation = Conversation::create([
-            'title' => $title,
-        ]);
-        $user = self::getUserInstance($userId);
-
-        if (!$user) {
-            throw new Exception("User not found with ID: $userId");
-        }
-
-        $user->conversations()->save($conversation);
-
         if (!is_array($receiverIds)) {
             $receiverIds = [$receiverIds];
         }
 
+        $conversations = collect();
+
         foreach ($receiverIds as $receiverId) {
+            $conversation = Conversation::create([
+                'title' => $title,
+            ]);
+            $user = self::getUserInstance($userId);
+
+            if (!$user) {
+                throw new Exception("User not found with ID: $userId");
+            }
+
+            $user->conversations()->save($conversation);
+
             $receiver = self::getUserInstance($receiverId);
             if (!$receiver) {
                 throw new Exception("Receiving user not found with ID: $receiverId");
             }
             $receiver->conversations()->save($conversation);
+
+            $conversations->push($conversation);
         }
 
-        return $conversation;
+        return $conversations->count() === 1 ? $conversations->first() : $conversations;
     }
+
 
     /**
      * Marks the status of a conversation.
@@ -55,7 +61,7 @@ class Convo
      * @param string $param The new status to be assigned to the conversation.
      *
      * @return void
-     *
+     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException If no Conversation is found with the given ID.
      */
     public static function markConversationStatus(Conversation|int $conversation, string $param): void
     {
@@ -82,7 +88,7 @@ class Convo
      * Get all conversation attachments.
      *
      * @param Conversation|int $conversation Conversation model or its id.
-     * @return Collection Collection of attachments.
+     * @return \Illuminate\Support\Collection Collection of attachments.
      */
     public static function getConversationAttachments(Conversation|int $conversation): \Illuminate\Support\Collection
     {
