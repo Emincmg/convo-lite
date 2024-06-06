@@ -15,6 +15,6 @@ trait GetsConversationInstance
      */
     private static function getConversationInstance(int $conversationId): ?\Emincmg\ConvoLite\Models\Conversation
     {
-        return \Emincmg\ConvoLite\Models\Conversation::find($conversationId);
+        return \Emincmg\ConvoLite\Models\Conversation::with(['users','messages'])->find($conversationId);
     }
 }

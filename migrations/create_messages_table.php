@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('body')->nullable();
-            $table->string('sender_name');
-            $table->json('read_by_user_id');
+            $table->json('read_by_user_id')->nullable();
 
             $table->unsignedBigInteger('conversation_id');
-            $table->unsignedBigInteger('attachment_id');
+            $table->unsignedBigInteger('attachment_id')->nullable();
             $table->unsignedBigInteger('user_id');
         });
     }

@@ -44,6 +44,7 @@ class Convo
 
             $conversation->users()->attach([$creator->id, $receiver->id]);
 
+            $conversation->load('users', 'messages');
             $conversations->push($conversation);
         }
 
@@ -163,7 +164,7 @@ class Convo
      */
     public static function getConversationByTitle(string $title): ?Conversation
     {
-        return Conversation::where('title', $title)->first();
+        return Conversation::with(['users','messages'])->where('title', $title)->first();
     }
 
     /**
@@ -206,6 +207,7 @@ class Convo
         }
 
         $message->user_id = $user->id;
+        $message->sender_name = $user->name;
 
         if ($file) {
             $message->attachFiles($file);
