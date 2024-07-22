@@ -14,6 +14,7 @@ return [
 
     'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
 
+
     /*
     |---------------------------------------------------------------------------
     | Send Message Notifications

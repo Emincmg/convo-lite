@@ -2,6 +2,7 @@
 
 namespace Emincmg\ConvoLite;
 
+use Emincmg\ConvoLite\Events\MessageSent;
 use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
 use Emincmg\ConvoLite\Traits\Conversation\GetsConversationInstance;
@@ -39,7 +40,7 @@ class Convo
             }
 
             $conversation = new Conversation();
-            $conversation->title = $title;
+            $conversation->title = $title ?? 'New Conversation';
             $conversation->save();
 
             $conversation->users()->attach([$creator->id, $receiver->id]);
@@ -214,6 +215,8 @@ class Convo
         }
 
         $message->save();
+
+        event(new MessageSent($message));
 
         return $message;
     }
