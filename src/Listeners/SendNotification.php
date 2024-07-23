@@ -11,7 +11,7 @@ class SendNotification
     {
         if (config('convo-lite.send_message_notifications')){
             $user = $event->message->user();
-            $user->notify(new NewMessageReceived());
+            $user->notify(new NewMessageReceived($event->message));
         }
     }
 }
