@@ -2,6 +2,8 @@
 
 namespace Emincmg\ConvoLite\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 class ReadBy extends Model
 {
     protected $table = 'read_by';

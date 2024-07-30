@@ -2,7 +2,6 @@
 
 namespace Emincmg\ConvoLite\Traits\Relationships;
 
-use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\ReadBy;
 
 trait HasReadBy
