@@ -18,8 +18,6 @@ class Message extends Model
         'body',
         'user_id',
         'conversation_id',
-        'files',
-        'sender_name',
     ];
 
 
@@ -36,5 +34,14 @@ class Message extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('withReadBy', function ($query) {
+            $query->with(['readBy']);
+        });
     }
 }
