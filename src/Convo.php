@@ -21,16 +21,20 @@ class Convo
      * @param array|int $receiverIds The ID(s) of the user(s) who will receive the conversation.
      * @param string|null $title The title of the conversation.
      *
-     * @return \Illuminate\Support\Collection Collection containing created conversations.
+     * @return Collection Collection containing created conversations.
      * @throws \Exception If not found user with given ID.
      */
-    public static function createConversation(int $creatorId, array|int $receiverIds, ?string $title = null): \Illuminate\Support\Collection
+    public static function createConversation(int $creatorId, array|int $receiverIds, ?string $title = null): Collection
     {
         $conversations = collect();
 
         $creator = self::getUserInstance($creatorId);
         if (!$creator) {
             throw new \Exception("Creator user not found with ID: $creatorId");
+        }
+
+        if (in_array($creatorId, (array)$receiverIds)) {
+            throw new \Exception('Conversation creator can not be the same with receiver');
         }
 
         foreach ((array)$receiverIds as $receiverId) {
@@ -146,9 +150,9 @@ class Convo
      * Get all conversation attachments.
      *
      * @param Conversation|int $conversation Conversation model or its id.
-     * @return \Illuminate\Support\Collection Collection of attachments.
+     * @return Collection Collection of attachments.
      */
-    public static function getConversationAttachments(Conversation|int $conversation): \Illuminate\Support\Collection
+    public static function getConversationAttachments(Conversation|int $conversation): Collection
     {
         if (is_int($conversation)) {
             $conversation = self::getConversationInstance($conversation);
@@ -172,9 +176,9 @@ class Convo
      * Return the messages of a conversation via conversation model.
      *
      * @param Conversation $conversation The conversation that its messages will be returned.
-     * @return \Illuminate\Support\Collection The collection of messages of the conversation.
+     * @return Collection The collection of messages of the conversation.
      */
-    public static function getMessagesByConversation(Conversation $conversation): \Illuminate\Support\Collection
+    public static function getMessagesByConversation(Conversation $conversation): Collection
     {
         return $conversation->messages;
     }
