@@ -220,11 +220,11 @@ class Convo
 
         $message->save();
 
-        $readBy = new ReadBy();
-        $readBy->conversation_id = $conversation->id;
-        $readBy->message_id = $message->id;
-        $readBy->user_id = $user->id;
-        $readBy->save();
+        ReadBy::create([
+            'conversation_id' => $conversation->id,
+            'message_id' => $message->id,
+            'user_id' => $user->id,
+        ]);
 
         event(new MessageSent($message));
 
