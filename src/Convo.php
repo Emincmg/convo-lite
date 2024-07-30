@@ -218,6 +218,8 @@ class Convo
         }
 
         $message->save();
+        $message->readBy()->save($user);
+        $conversation->readBy()->save($user);
 
         event(new MessageSent($message));
 
