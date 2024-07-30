@@ -221,6 +221,8 @@ class Convo
 
         event(new MessageSent($message));
 
+        $message->load('user','conversation','attachments');
+
         return $message;
     }
 }
