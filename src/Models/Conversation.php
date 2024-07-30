@@ -5,13 +5,14 @@ namespace Emincmg\ConvoLite\Models;
 use Emincmg\ConvoLite\Traits\Conversation\SetsStatus;
 use Emincmg\ConvoLite\Traits\Conversation\SetsTitle;
 use Emincmg\ConvoLite\Traits\Message\SendsMessage;
+use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use SendsMessage, SetsTitle, SetsStatus;
+    use SendsMessage, SetsTitle, SetsStatus, HasReadBy;
 
-    protected $fillable=
+    protected $fillable =
         [
             'title',
             'status',
@@ -31,5 +32,14 @@ class Conversation extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('withReadBy', function ($query) {
+            $query->with(['readBy']);
+        });
     }
 }

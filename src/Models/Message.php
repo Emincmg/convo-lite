@@ -3,11 +3,12 @@
 namespace Emincmg\ConvoLite\Models;
 
 use Emincmg\ConvoLite\Traits\Message\AttachesFiles;
+use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    use AttachesFiles;
+    use AttachesFiles, HasReadBy;
 
     /**
      * Get the attributes that can be assigned.
@@ -19,19 +20,8 @@ class Message extends Model
         'conversation_id',
         'files',
         'sender_name',
-        'read_by_id',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'read_by_id' => 'array',
-        ];
-    }
 
     public function conversation()
     {

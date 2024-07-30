@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('full_path')->nullable();
             $table->string('storage_path')->nullable();
             $table->string('public_path')->nullable();
-            $table->json('read_by_user_id');
 
             $table->unsignedBigInteger('conversation_id');
             $table->unsignedBigInteger('message_id');

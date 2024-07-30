@@ -55,7 +55,7 @@ class Convo
     /**
      * Add user(s) to a conversation.
      *
-     * @param Conversation|int $conversation Conversation that user(s) will be attached.
+     * @param Conversation|int $conversation Conversation (or its ID) that user(s) will be attached.
      * @param int|array $users Array of user IDs or user instances.
      * @throws \Exception If no conversation is found with given ID.
      */
@@ -67,7 +67,7 @@ class Convo
     /**
      * Remove user(s) from a conversation.
      *
-     * @param Conversation|int $conversation Conversation that user(s) will be attached.
+     * @param Conversation|int $conversation Conversation (or its ID) that user(s) will be attached.
      * @param int|array $users Array of user IDs or user instances.
      * @throws \Exception If no conversation is found with given ID.
      */
@@ -79,7 +79,7 @@ class Convo
     /**
      * Manage attaching/detaching participators from a conversation.
      *
-     * @param Conversation|int $conversation Conversation that user(s) will be attached/detached.
+     * @param Conversation|int $conversation Conversation (or its ID) that user(s) will be attached/detached.
      * @param int|array $users Array of user IDs or user instances.
      * @param string $intent Intent of calling. Can be either attach or detach.
      * @return void

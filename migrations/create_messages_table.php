@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('body')->nullable();
-            $table->json('read_by_user_id')->nullable();
 
             $table->unsignedBigInteger('conversation_id');
             $table->unsignedBigInteger('attachment_id')->nullable();

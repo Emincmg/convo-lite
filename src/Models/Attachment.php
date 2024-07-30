@@ -3,11 +3,12 @@
 namespace Emincmg\ConvoLite\Models;
 
 use Emincmg\ConvoLite\Traits\Message\AttachesFiles;
+use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
 use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
-    use AttachesFiles;
+    use AttachesFiles, HasReadBy;
 
     /**
      * Get the attributes that can be assigned.
@@ -22,19 +23,7 @@ class Attachment extends Model
         'full_path',
         'storage_path',
         'public_path',
-        'read_by_user_id',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'read_by_user_id' => 'array',
-        ];
-    }
 
     public function conversation()
     {
