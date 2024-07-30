@@ -212,7 +212,6 @@ class Convo
         }
 
         $message->user_id = $user->id;
-        $message->sender_name = $user->name;
 
         if ($file) {
             $message->attachFiles($file);

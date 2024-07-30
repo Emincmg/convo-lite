@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReadBy extends Model
 {
-    protected $table = 'read_by';
+    protected $table = 'convo_read_by';
 
     protected $fillable = [
         'conversation_id',
