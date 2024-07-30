@@ -218,7 +218,7 @@ class Convo
         }
 
         $message->save();
-        $conversation->update(['has_new_message'=>true]);
+
         event(new MessageSent($message));
 
         $message->load('user','conversation','attachments');
