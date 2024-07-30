@@ -34,13 +34,4 @@ class ReadBy extends Model
     {
         return $this->belongsTo(config('convo-lite.user_model'));
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope('withReadBy', function ($query) {
-            $query->with(['readBy']);
-        });
-    }
 }
