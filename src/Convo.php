@@ -43,12 +43,7 @@ class Convo
             $conversation->title = $title ?? 'New Conversation';
             $conversation->save();
 
-            $existingUsers = $conversation->users()->pluck('user_id')->toArray();
-            $usersToAttach = array_diff([$creator->id, $receiver->id], $existingUsers);
-
-            if (!empty($usersToAttach)) {
-                $conversation->users()->attach($usersToAttach);
-            }
+            $conversation->users()->attach([$creator->id, $receiver->id]);
 
             $conversation->load('users', 'messages');
             $conversations->push($conversation);
