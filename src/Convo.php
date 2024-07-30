@@ -5,6 +5,7 @@ namespace Emincmg\ConvoLite;
 use Emincmg\ConvoLite\Events\MessageSent;
 use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
+use Emincmg\ConvoLite\Models\ReadBy;
 use Emincmg\ConvoLite\Traits\Conversation\GetsConversationInstance;
 use Emincmg\ConvoLite\Traits\GetsUserInstance;
 use Illuminate\Http\UploadedFile;
@@ -218,8 +219,12 @@ class Convo
         }
 
         $message->save();
-        $message->readBy()->save($user);
-        $conversation->readBy()->save($user);
+
+        $readBy = new ReadBy();
+        $readBy->conversation_id = $conversation->id;
+        $readBy->message_id = $message->id;
+        $readBy->user_id = $user->id;
+        $readBy->save();
 
         event(new MessageSent($message));
 
