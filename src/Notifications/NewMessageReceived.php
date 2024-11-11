@@ -6,19 +6,20 @@ use Emincmg\ConvoLite\Models\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
 class NewMessageReceived extends Notification
 {
     use Queueable;
 
-
     /**
      * Create a new notification instance.
      */
     public function __construct(public Message $message)
     {
-
+        //
     }
 
     /**
@@ -28,7 +29,7 @@ class NewMessageReceived extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return config('convo-lite.notification_channels');
     }
 
     /**
@@ -37,13 +38,48 @@ class NewMessageReceived extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New message notification from' . ' ' . $this->message->senderName)
-            ->greeting("Dear " . $notifiable->first_name . " " . $notifiable->last_name . ',')
-            ->line("You've got a new message from " . $this->message->senderName . " in Blue Palm Website.")
-            ->line("Click the button below to view.")
-            ->action('Details', config('convo-lite.app_url'))
-            ->line('Best Regards,')
+            ->subject(__('notifications.new_message_subject', ['sender' => $this->message->senderName]))
+            ->greeting(__('notifications.greeting', ['name' => $notifiable->first_name . ' ' . $notifiable->last_name]))
+            ->line(__('notifications.new_message_line', ['sender' => $this->message->senderName]))
+            ->line(__('notifications.click_to_view'))
+            ->action(__('notifications.view_details'), config('convo-lite.app_url'))
+            ->line(__('notifications.best_regards'))
             ->salutation(env('APP_NAME'));
+    }
+
+    /**
+     * Get the broadcast representation of the notification.
+     */
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'message_id' => $this->message->id,
+            'sender_name' => $this->message->senderName,
+            'content' => $this->message->body,
+        ]);
+    }
+
+    /**
+     * Get the Slack representation of the notification.
+     */
+    public function toSlack(object $notifiable): SlackMessage
+    {
+        return (new SlackMessage)
+            ->success()
+            ->content(__('notifications.slack_message', ['sender' => $this->message->senderName]))
+            ->attachment(function ($attachment) {
+                $attachment->title(__('notifications.view_message'), config('convo-lite.app_url'))
+                    ->content($this->message->content);
+            });
+    }
+
+    /**
+     * Get the Nexmo (SMS) representation of the notification.
+     */
+    public function toNexmo(object $notifiable)
+    {
+        return (new \Illuminate\Notifications\Messages\NexmoMessage)
+            ->content(__('notifications.sms_message', ['sender' => $this->message->senderName]));
     }
 
     /**
@@ -54,7 +90,9 @@ class NewMessageReceived extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-//
+            'message_id' => $this->message->id,
+            'sender_name' => $this->message->senderName,
+            'content' => $this->message->content,
         ];
     }
 }

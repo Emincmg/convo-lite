@@ -5,7 +5,7 @@ namespace Emincmg\ConvoLite\Listeners;
 use Emincmg\ConvoLite\Events\MessageSent;
 use Emincmg\ConvoLite\Notifications\NewMessageReceived;
 
-class SendNotification
+class SendMessageNotification
 {
     public function handle(MessageSent $event)
     {
