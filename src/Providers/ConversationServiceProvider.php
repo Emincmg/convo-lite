@@ -64,6 +64,12 @@ class ConversationServiceProvider extends ServiceProvider
                 __DIR__ . '/../../migrations/create_convo_read_by_table.php' =>
                     $this->app->databasePath('migrations' .
                         DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_convo_read_by_table.php'),], 'migrations');
+
+            $this->loadTranslationsFrom(__DIR__ . '../../lang', 'convo-lite');
+
+            $this->publishes([
+                __DIR__ . '/../../lang' => $this->app->langPath('vendor/convo-lite'),
+            ]);
         }
     }
 }
