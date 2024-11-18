@@ -12,7 +12,7 @@ return [
     | issues.
     */
 
-    'user_model' => config('auth.providers.users.model', 'App\\Models\\User.php'),
+    'user_model' => config('auth.providers.users.model', 'App\\Models\\User'),
 
     /*
     |---------------------------------------------------------------------------
