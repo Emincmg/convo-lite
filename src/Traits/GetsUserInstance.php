@@ -11,8 +11,8 @@ trait GetsUserInstance
      * @param int $userId The ID of the user.
      * @return User|null The user instance if found, or null if not found.
      */
-    private static function getUserInstance(int $userId)
+    private static function getUserInstance(int $userId): ?User
     {
-        return config('convo-lite.user_model')::find($userId);
+        return resolve(config('convo-lite.user_model'))->find($userId);
     }
 }

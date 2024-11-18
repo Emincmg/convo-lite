@@ -25,7 +25,7 @@ trait SendsMessage
      */
     public function sendMessage(string $body, string $senderName, int $userId, ?array $files): ?Message
     {
-        $user = config('convo-lite.user_model')::findOrFail($userId);
+        $user = resolve(config('convo-lite.user_model'))->findOrFail($userId);
         if (!$user) {
             throw new Exception("User not found with ID: $userId");
         }
