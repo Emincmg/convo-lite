@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace Emincmg\ConvoLite\Notifications;
 
 use Emincmg\ConvoLite\Models\Message;
 use Illuminate\Bus\Queueable;
