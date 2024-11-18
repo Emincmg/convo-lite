@@ -31,7 +31,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option controls whether to send notifications to message recipients. By default, email notifications are disabled.
-    | To enable notifications, specify the channels (e.g., "mail") in this setting to notify users when they receive messages.
+    | To enable notifications, specify the channels (e.g., "mail, broadcast(for WebSocket)") in this setting to notify users
+    | when they receive messages.
     |
     */
 
