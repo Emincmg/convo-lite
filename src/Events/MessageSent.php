@@ -5,6 +5,7 @@ namespace Emincmg\ConvoLite\Events;
 use Emincmg\ConvoLite\Models\Message;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 
