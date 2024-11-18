@@ -12,12 +12,11 @@ class Conversation extends Model
 {
     use SendsMessage, SetsTitle, SetsStatus, HasReadBy;
 
-    protected $fillable =
-        [
-            'title',
-            'status',
-            'has_new_message'
-        ];
+    protected $fillable = [
+        'title',
+        'status',
+        'has_new_message'
+    ];
 
     public function users()
     {
@@ -34,7 +33,7 @@ class Conversation extends Model
         return $this->hasMany(Attachment::class);
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
