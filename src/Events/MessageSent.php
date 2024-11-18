@@ -22,6 +22,6 @@ class MessageSent implements ShouldBroadcast
 
     public function broadCastOn():Channel
     {
-        return new Channel('convo-lite.message.sent');
+        return new Channel('convo-lite');
     }
 }
