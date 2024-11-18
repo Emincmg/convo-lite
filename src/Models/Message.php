@@ -36,6 +36,11 @@ class Message extends Model
         return $this->hasMany(Attachment::class);
     }
 
+    public function receivers()
+    {
+        return $this->conversation->users()->where('id','!=',$this->user_id)->get();
+    }
+
     protected static function boot()
     {
         parent::boot();
