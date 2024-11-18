@@ -25,9 +25,10 @@ class NewMessageReceived extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @return array<int, string>
+     * @param object $notifiable
+     * @return array|string
      */
-    public function via(object $notifiable): array
+    public function via(object $notifiable): array|string
     {
         return config('convo-lite.notification_channels');
     }
