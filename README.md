@@ -3,7 +3,9 @@
 Convo Lite is a package that allows you to easily create and manage chat rooms in your Laravel application. This package
 enables your users to communicate with each other.
 
-## Installation
+# Installation
+
+### Include the package
 
 You can include Convo Lite in your project using composer:
 
@@ -11,7 +13,15 @@ You can include Convo Lite in your project using composer:
 composer require emincmg/convo-lite
 ```
 
-## Configuration
+### Migrate
+
+Run the migrations to create the necessary database tables:
+
+```bash
+php artisan migrate
+```
+
+# Configuration
 
 Publish the package's publishable files by running the following command:
 
@@ -32,15 +42,7 @@ You can change the default model for creating conversations between them through
 This defaults to your applications default model, so you can change that or if you only change for this package change
 this field.
 
-### Migrations
-
-Run the migrations to create the necessary database tables:
-
-```bash
-php artisan migrate
-```
-
-## Usage
+# Usage
 
 To start using Convo Lite, you can add some basic routes and controller methods to manage conversations and messages.
 Here is an example usage:
@@ -96,7 +98,7 @@ both will return the same thing;
 ]
 ```
 
-if more than one receivers are provided, response will be a collection of conversations that has been created.
+if multiple receivers are provided, response will be a collection of conversations that has been created.
 
 ### Get a conversation
 
@@ -171,6 +173,5 @@ $conversation = Convo::getConversationById(1);
 $conversation->messages;
 ```
 
-## License
 Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
 
