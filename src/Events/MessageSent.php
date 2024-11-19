@@ -35,7 +35,7 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
 
     public function broadcastQueue(): string
     {
-        return 'default';
+        return 'convo-lite';
     }
 
 }
