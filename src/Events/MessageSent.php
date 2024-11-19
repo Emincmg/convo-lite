@@ -38,4 +38,8 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
         return 'convo-lite';
     }
 
+    public function broadcastAs()
+    {
+        return 'MessageSent';
+    }
 }
