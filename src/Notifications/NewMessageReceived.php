@@ -14,20 +14,7 @@ use Illuminate\Notifications\Notification;
 
 class NewMessageReceived extends Notification implements ShouldBroadcast, ShouldQueue
 {
-    /**
-     * The name of the queue the job should be sent to.
-     *
-     * @var string|null
-     */
-    public ?string $queue;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(public Message $message, public int $userId)
-    {
-        $this->queue = config('convo-lite.channels.broadcast');
-    }
+    use Queueable;
 
     /**
      * Get the notification's delivery channels.
