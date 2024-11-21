@@ -38,6 +38,7 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
 
     public function broadcastWith()
     {
+        $this->message->load(['readBy', 'conversation']);
         return [
             'created_at'=>$this->message->created_at,
             'body' => $this->message->body,
