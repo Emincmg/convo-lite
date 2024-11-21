@@ -28,6 +28,31 @@ return [
 
     'notification_channels' => env('CONVO_LITE_NOTIFICATION_CHANNELS', ['broadcast']),
 
+    /*
+   |--------------------------------------------------------------------------
+   | Custom Queues
+   |--------------------------------------------------------------------------
+   |
+   | This option allows you to define custom queue names for different types
+   | of notifications. By specifying these queues, you can better organize
+   | and manage your notification delivery processes. Each type of notification,
+   | such as mail, broadcast, Slack, or Nexmo, can be assigned to a specific queue.
+   |
+   | Example:
+   | - 'mail' => 'convo-lite.mail' (Queue for mail notifications)
+   | - 'broadcast' => 'convo-lite.broadcast' (Queue for broadcast notifications)
+   | - 'slack' => 'convo-lite.slack' (Queue for Slack notifications)
+   | - 'nexmo' => 'convo-lite.nexmo' (Queue for Nexmo/SMS notifications)
+   |
+   */
+
+    'queues' => [
+        'mail' => 'convo-lite.mail',
+        'broadcast' => 'convo-lite.broadcast',
+        'slack' => 'convo-lite.slack',
+        'nexmo' => 'convo-lite.nexmo',
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

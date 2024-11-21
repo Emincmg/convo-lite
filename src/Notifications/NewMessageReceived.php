@@ -69,9 +69,9 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     /**
      * The name of the queue on which to place the broadcasting job.
      */
-    public function broadcastQueue(): string
+    public function viaQueues(): array
     {
-        return 'convo-lite';
+        return config('convo-lite.custom_queues');
     }
 
     /**
