@@ -57,6 +57,7 @@ class NewMessageReceived extends Notification
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
             'body' => $this->message->body,
+            'read_by'=>$this->message->readBy()
         ]);
     }
 
@@ -93,7 +94,7 @@ class NewMessageReceived extends Notification
         return [
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
-            'body' => $this->message->body,
+            'body' => $this->message->body
         ];
     }
 }
