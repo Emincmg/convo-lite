@@ -49,15 +49,4 @@ class Message extends Model
             $query->with(['readBy']);
         });
     }
-
-    /**
-     * Get the data to broadcast for the model.
-     *
-     * @return array<string, mixed>
-     */
-    public function broadcastWith(string $event): array
-    {
-        $this->load('readBy');
-        return $this->toArray();
-    }
 }

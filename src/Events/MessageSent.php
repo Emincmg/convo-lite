@@ -35,4 +35,15 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
     {
         return 'MessageSent';
     }
+
+    /**
+     * Get the data to broadcast for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return $this->message->load(['user','conversation','attachments','readBy','receivers'])->toArray();
+
+    }
 }
