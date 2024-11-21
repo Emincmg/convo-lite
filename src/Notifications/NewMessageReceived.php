@@ -56,7 +56,7 @@ class NewMessageReceived extends Notification
         return new BroadcastMessage([
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
-            'content' => $this->message->body,
+            'body' => $this->message->body,
         ]);
     }
 
@@ -70,7 +70,7 @@ class NewMessageReceived extends Notification
             ->content(__('notifications.slack_message', ['sender' => $this->message->senderName]))
             ->attachment(function ($attachment) {
                 $attachment->title(__('notifications.view_message'), config('convo-lite.app_url'))
-                    ->content($this->message->content);
+                    ->content($this->message->body);
             });
     }
 
@@ -93,7 +93,7 @@ class NewMessageReceived extends Notification
         return [
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
-            'content' => $this->message->content,
+            'body' => $this->message->body,
         ];
     }
 }
