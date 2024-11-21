@@ -15,12 +15,13 @@ use Illuminate\Notifications\Notification;
 class NewMessageReceived extends Notification implements ShouldBroadcast, ShouldQueue
 {
     use Queueable;
+
     /**
      * Create a new notification instance.
      */
     public function __construct(public Message $message, public int $userId)
     {
-        //
+        $this->onQueue(config('convo-lite.channels.broadcast'));
     }
 
     /**
@@ -72,14 +73,6 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     public function viaQueues(): array
     {
         return config('convo-lite.queues');
-    }
-
-    /**
-     * The event's broadcast queue.
-     */
-    public function broadcastQueue(): string
-    {
-        return config('convo-lite.queues.broadcast');
     }
 
     /**
