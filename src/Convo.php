@@ -228,7 +228,7 @@ class Convo
 
         event(new MessageSent($message->load('conversation','readBy')));
 
-        $message->load('user','conversation','attachments','readBy','receivers');
+        $message->load('user','conversation','attachments','readBy');
 
         return $message;
     }
