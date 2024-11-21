@@ -18,6 +18,7 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
 
     public function __construct(Message $message)
     {
+        $this->load(['user','conversation','attachments','readBy','receivers'])
         $this->message = $message;
     }
 
@@ -34,16 +35,5 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
     public function broadcastAs()
     {
         return 'MessageSent';
-    }
-
-    /**
-     * Get the data to broadcast for the model.
-     *
-     * @return array<string, mixed>
-     */
-    public function broadcastWith(): array
-    {
-        return $this->message->load(['user','conversation','attachments','readBy','receivers'])->toArray();
-
     }
 }
