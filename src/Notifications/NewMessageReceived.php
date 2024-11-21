@@ -3,17 +3,16 @@
 namespace Emincmg\ConvoLite\Notifications;
 
 use Emincmg\ConvoLite\Models\Message;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
-class NewMessageReceived extends Notification
+class NewMessageReceived extends Notification implements ShouldBroadcast, ShouldQueue
 {
-    use Queueable;
-
     /**
      * Create a new notification instance.
      */
@@ -24,9 +23,6 @@ class NewMessageReceived extends Notification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @param object $notifiable
-     * @return array|string
      */
     public function via(object $notifiable): array|string
     {
@@ -40,9 +36,8 @@ class NewMessageReceived extends Notification
     {
         return (new MailMessage)
             ->subject(__('notifications.new_message_subject', ['sender' => $this->message->senderName]))
-            ->greeting(__('notifications.greeting', ['name' => $notifiable->first_name . ' ' . $notifiable->last_name]))
+            ->greeting(__('notifications.greeting', ['name' => "{$notifiable->first_name} {$notifiable->last_name}"]))
             ->line(__('notifications.new_message_line', ['sender' => $this->message->senderName]))
-            ->line(__('notifications.click_to_view'))
             ->action(__('notifications.view_details'), config('convo-lite.app_url'))
             ->line(__('notifications.best_regards'))
             ->salutation(env('APP_NAME'));
@@ -57,8 +52,48 @@ class NewMessageReceived extends Notification
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
             'body' => $this->message->body,
-            'read_by'=>$this->message->readBy,
+            'read_by' => $this->message->readBy,
         ]);
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     */
+    public function broadcastOn(object $notifiable): array
+    {
+        return [new PrivateChannel('user.' . $notifiable->id)];
+    }
+
+    /**
+     * The name of the queue on which to place the broadcasting job.
+     */
+    public function broadcastQueue(): string
+    {
+        return 'convo-lite';
+    }
+
+    /**
+     * The event's broadcast name.
+     */
+    public function broadcastAs(): string
+    {
+        return 'message.sent';
+    }
+
+    /**
+     * Get the data to broadcast.
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'created_at' => $this->message->created_at,
+            'body' => $this->message->body,
+            'read_by' => $this->message->readBy->map(fn($user) => $user->name),
+            'conversation' => [
+                'id' => $this->message->conversation->id,
+                'title' => $this->message->conversation->title,
+            ],
+        ];
     }
 
     /**
@@ -70,7 +105,8 @@ class NewMessageReceived extends Notification
             ->success()
             ->content(__('notifications.slack_message', ['sender' => $this->message->senderName]))
             ->attachment(function ($attachment) {
-                $attachment->title(__('notifications.view_message'), config('convo-lite.app_url'))
+                $attachment
+                    ->title(__('notifications.view_message'), config('convo-lite.app_url'))
                     ->content($this->message->body);
             });
     }
@@ -86,15 +122,13 @@ class NewMessageReceived extends Notification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
-            'body' => $this->message->body
+            'body' => $this->message->body,
         ];
     }
 }

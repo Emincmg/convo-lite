@@ -2,6 +2,7 @@
 
 namespace Emincmg\ConvoLite;
 
+use Emincmg\ConvoLite\Events\ConversationCreated;
 use Emincmg\ConvoLite\Events\MessageSent;
 use Emincmg\ConvoLite\Models\Conversation;
 use Emincmg\ConvoLite\Models\Message;
@@ -52,6 +53,8 @@ class Convo
 
             $conversation->load('users', 'messages');
             $conversations->push($conversation);
+
+            event(new ConversationCreated($conversation,$receiver));
         }
 
         return $conversations;
