@@ -9,11 +9,9 @@ class SendMessageNotification
 {
     public function handle(MessageSent $event)
     {
-        if (config('convo-lite.send_message_notifications') === true) {
-            $receivers = $event->message->receivers();
-            foreach ($receivers as $receiver){
-                $receiver->notify(new NewMessageReceived($event->message));
-            }
+        $receivers = $event->message->receivers();
+        foreach ($receivers as $receiver) {
+            $receiver->notify(new NewMessageReceived($event->message));
         }
     }
 }

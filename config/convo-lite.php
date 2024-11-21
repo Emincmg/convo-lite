@@ -14,16 +14,6 @@ return [
 
     'user_model' => config('auth.providers.users.model', 'App\\Models\\User'),
 
-    /*
-    |---------------------------------------------------------------------------
-    | Send Message Notifications
-    |---------------------------------------------------------------------------
-    |
-    | This controls whether send email to the receivers upon sent messages. Its disabled by default, change this if you
-    | want to enable sending notifications via mail upon receiving messages.
-    */
-
-    'send_message_notifications' => env('CONVO_LITE_NOTIFICATIONS_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +26,7 @@ return [
     |
     */
 
-    'notification_channels' => env('CONVO_LITE_NOTIFICATION_CHANNELS', []),
+    'notification_channels' => env('CONVO_LITE_NOTIFICATION_CHANNELS', ['broadcast']),
 
 
     /*
