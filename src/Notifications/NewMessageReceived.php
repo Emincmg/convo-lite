@@ -17,11 +17,18 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     use Queueable;
 
     /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
+    public ?string $queue;
+
+    /**
      * Create a new notification instance.
      */
     public function __construct(public Message $message, public int $userId)
     {
-        $this->onQueue(config('convo-lite.channels.broadcast'));
+        $this->queue = config('convo-lite.channels.broadcast');
     }
 
     /**
@@ -73,6 +80,14 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     public function viaQueues(): array
     {
         return config('convo-lite.queues');
+    }
+
+    /**
+     * The event's broadcast queue.
+     */
+    public function broadcastQueue(): string
+    {
+        return config('convo-lite.queues.broadcast');
     }
 
     /**
