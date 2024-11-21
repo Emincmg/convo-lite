@@ -226,9 +226,9 @@ class Convo
             'user_id' => $user->id,
         ]);
 
-        $message->load('user','conversation','attachments','readBy');
+        event(new MessageSent($message->load('conversation','readBy')));
 
-        event(new MessageSent($message));
+        $message->load('user','conversation','attachments','readBy','receivers');
 
         return $message;
     }
