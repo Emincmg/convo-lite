@@ -3,6 +3,7 @@
 namespace Emincmg\ConvoLite\Notifications;
 
 use Emincmg\ConvoLite\Models\Message;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -13,6 +14,7 @@ use Illuminate\Notifications\Notification;
 
 class NewMessageReceived extends Notification implements ShouldBroadcast, ShouldQueue
 {
+    use Queueable;
     /**
      * Create a new notification instance.
      */
