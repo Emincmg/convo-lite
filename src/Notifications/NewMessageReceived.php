@@ -71,7 +71,7 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
      */
     public function viaQueues(): array
     {
-        return config('convo-lite.custom_queues');
+        return config('convo-lite.queues');
     }
 
     /**
