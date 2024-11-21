@@ -18,7 +18,7 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Message $message)
+    public function __construct(public Message $message, public int $userId)
     {
         //
     }
