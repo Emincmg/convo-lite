@@ -26,7 +26,6 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
         return new Channel('convo-lite');
     }
 
-
     public function broadcastQueue(): string
     {
         return 'convo-lite';
