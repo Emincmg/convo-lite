@@ -26,12 +26,6 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
         return new Channel('convo-lite');
     }
 
-    public function broadcastWith(): array
-    {
-        return [
-            'message' => $this->message,
-        ];
-    }
 
     public function broadcastQueue(): string
     {

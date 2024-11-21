@@ -57,7 +57,7 @@ class NewMessageReceived extends Notification
             'message_id' => $this->message->id,
             'sender_name' => $this->message->senderName,
             'body' => $this->message->body,
-            'read_by'=>$this->message->readBy()
+            'read_by'=>$this->message->readBy,
         ]);
     }
 
