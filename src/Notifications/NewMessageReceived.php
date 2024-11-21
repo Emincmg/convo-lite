@@ -14,8 +14,6 @@ use Illuminate\Notifications\Notification;
 
 class NewMessageReceived extends Notification implements ShouldBroadcast, ShouldQueue
 {
-    use Queueable;
-
     /**
      * The name of the queue the job should be sent to.
      *
