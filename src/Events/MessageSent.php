@@ -35,4 +35,19 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
     {
         return 'MessageSent';
     }
+
+    public function broadcastWith()
+    {
+        return [
+            'created_at'=>$this->message->created_at,
+            'body' => $this->message->body,
+            'read_by'=>$this->message->readBy->map(function ($user) {
+                return $user->name;
+            }),
+            'conversation'=>[
+                'id'=>$this->message->conversation->id,
+                'title'=>$this->message->conversation->title,
+            ]
+        ];
+    }
 }
