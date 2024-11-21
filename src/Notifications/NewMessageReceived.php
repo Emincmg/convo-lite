@@ -59,9 +59,9 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     /**
      * Get the channels the event should broadcast on.
      */
-    public function broadcastOn(object $notifiable): array
+    public function broadcastOn(): array
     {
-        return [new PrivateChannel('user.' . $notifiable->id)];
+        return [new PrivateChannel('user.' . $this->notifiable->id)];
     }
 
     /**
