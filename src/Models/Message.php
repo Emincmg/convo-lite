@@ -38,7 +38,7 @@ class Message extends Model
 
     public function receivers()
     {
-        return $this->conversation->users()->where('id','!=',$this->user_id)->get();
+        return $this->conversation()->users()->where('id','!=',$this->user_id)->get();
     }
 
     protected static function boot()
