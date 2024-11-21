@@ -18,7 +18,7 @@ class MessageSent implements ShouldBroadcast, ShouldQueue
 
     public function __construct(Message $message)
     {
-        $this->load(['user','conversation','attachments','readBy','receivers'])
+        $this->load(['user','conversation','attachments','readBy','receivers']);
         $this->message = $message;
     }
 
