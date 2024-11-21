@@ -11,7 +11,7 @@ class SendMessageNotification
     {
         $receivers = $event->message->receivers();
         foreach ($receivers as $receiver) {
-            $receiver->notify(new NewMessageReceived($event->message,$receiver->id));
+            $receiver->notify(new NewMessageReceived($event->message));
         }
     }
 }
