@@ -1,5 +1,6 @@
 {
   "name": "emincmg/convo-lite",
+  "version": "1.0.1",
   "description": "A lightweight Laravel package to facilitate real-time chat and conversation features with WebSocket support.",
   "type": "library",
   "license": "MIT",
