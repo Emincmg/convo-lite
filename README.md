@@ -102,16 +102,8 @@ if multiple receivers are provided, response will be a collection of conversatio
 
 ### Get a conversation
 
-Get by id
-
 ```php
 $conversation = Convo::getConversationById(1);
-```
-
-Get by title
-
-```php
-$conversation = Convo::getConversationByTitle('Title')
 ```
 
 ### Add Participators

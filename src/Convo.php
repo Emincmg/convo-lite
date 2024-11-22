@@ -205,17 +205,6 @@ class Convo
     }
 
     /**
-     * Get a Conversation by its title.
-     *
-     * @param string $title The title of the Conversation.
-     * @return Convo|null The Conversation object matching the given title or null if no Conversation is found.
-     */
-    public static function getConversationByTitle(string $title): ?Conversation
-    {
-        return Conversation::with(['users', 'messages'])->where('title', $title)->first();
-    }
-
-    /**
      * Return the messages of a conversation via conversation model.
      *
      * @param Conversation $conversation The conversation that its messages will be returned.
