@@ -1,6 +1,6 @@
 {
   "name": "emincmg/convo-lite",
-  "description": "A lightweight conversation package for Laravel projects, facilitating smooth chat experiences.",
+  "description": "A lightweight Laravel package to facilitate real-time chat and conversation features with WebSocket support.",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -31,23 +31,28 @@
       }
     }
   },
-  "minimum-stability": "dev",
-  "require": {
-    "php": "^8.1"
-  },
+  "minimum-stability": "stable",
   "prefer-stable": true,
+  "require": {
+    "php": "^8.1",
+    "illuminate/support": "^10.0"
+  },
+  "require-dev": {
+    "nunomaduro/collision": "^7.8",
+    "phpunit/phpunit": "^10.0"
+  },
   "config": {
     "sort-packages": true,
     "preferred-install": "dist",
     "optimize-autoloader": true
   },
-  "require-dev": {
-    "nunomaduro/collision": "^7.8"
-  },
   "scripts": {
     "post-autoload-dump": [
       "@clear",
       "@prepare"
+    ],
+    "post-install-cmd": [
+      "@php artisan vendor:publish --tag=convo-lite-config"
     ],
     "lint": [
       "@php vendor/bin/phpstan analyse"
@@ -55,5 +60,13 @@
     "test": [
       "@php vendor/bin/phpunit"
     ]
-  }
+  },
+  "keywords": [
+    "laravel",
+    "chat",
+    "conversation",
+    "websocket",
+    "real-time",
+    "messaging"
+  ]
 }

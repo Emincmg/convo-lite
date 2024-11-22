@@ -30,7 +30,7 @@ return [
 
     /*
    |--------------------------------------------------------------------------
-   | Custom Queues
+   | Queues
    |--------------------------------------------------------------------------
    |
    | This option allows you to define custom queue names for different types

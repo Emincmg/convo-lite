@@ -173,5 +173,34 @@ $conversation = Convo::getConversationById(1);
 $conversation->messages;
 ```
 
+# Broadcasting
+
+Convo Lite supports Broadcasting via events and listeners.
+
+### Broadcasting Authorization
+
+Events are broadcasted to the private channels of the users : `user + id (eg user.1)` . I recommend using Laravel Reverb on the backend along with Echo on the frontend for fast & secure implementation. Check out their [Documentation here](https://laravel.com/docs/11.x/reverb)
+
+### Queues
+
+Events are pushed to the `queues` specified in the `config/convo_lite.php` file
+
+```php
+'queues' => [
+'mail' => 'convo-lite.mail',
+'broadcast' => 'convo-lite.broadcast',
+'slack' => 'convo-lite.slack',
+'nexmo' => 'convo-lite.nexmo',
+],
+```
+
+In order to process the events that got triggered, you should start your workers like this;
+
+```bash
+php artisan queue:work --queue=convo-lite.mail,convo-lite.broadcast,default
+```
+
+For broadcasting to work, `default` queue worker should be always started.
+
 Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
 
