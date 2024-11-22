@@ -17,6 +17,13 @@ class NewMessageReceived extends Notification implements ShouldBroadcast, Should
     use Queueable;
 
     /**
+     * Create a new notification instance.
+     */
+    public function __construct(public Message $message, public int $userId)
+    {
+    }
+
+    /**
      * Get the notification's delivery channels.
      */
     public function via(object $notifiable): array|string
