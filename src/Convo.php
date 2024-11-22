@@ -9,12 +9,13 @@ use Emincmg\ConvoLite\Models\Message;
 use Emincmg\ConvoLite\Models\ReadBy;
 use Emincmg\ConvoLite\Traits\Conversation\GetsConversationInstance;
 use Emincmg\ConvoLite\Traits\GetsUserInstance;
+use Emincmg\ConvoLite\Traits\Message\GetsMessageInstance;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 class Convo
 {
-    use GetsUserInstance, GetsConversationInstance;
+    use GetsUserInstance, GetsConversationInstance, GetsMessageInstance;
 
     /**
      * Creates a new conversation.
@@ -54,7 +55,7 @@ class Convo
             $conversation->load('users', 'messages');
             $conversations->push($conversation);
 
-            event(new ConversationCreated($conversation,$receiver));
+            event(new ConversationCreated($conversation, $receiver));
         }
 
         return $conversations;
@@ -116,25 +117,63 @@ class Convo
         } else {
             $conversation->users()->detach($userIds);
         }
-
     }
 
 
     /**
-     * Marks the status of a conversation.
+     * Mark the status of a conversation.
+     *
+     *  This method updates the status of a message. It accepts either a Conversation instance
+     *  or a conversation ID (integer) and updates the status field in the database.
      *
      * @param Conversation|int $conversation The conversation instance or its id that will be marked.
      * @param string $param The new status to be assigned to the conversation.
      *
-     * @return void
+     * @return Conversation Conversation instance that its status is updated.
      * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException If no Conversation is found with the given ID.
      */
-    public static function markConversationStatus(Conversation|int $conversation, string $param): void
+    public static function markConversationStatus(Conversation|int $conversation, string $param): Conversation
     {
         if (is_int($conversation)) {
             $conversation = self::getConversationInstance($conversation);
         }
         $conversation->update(['status' => $param]);
+        return $conversation;
+    }
+
+    /**
+     * Mark the status of a given message.
+     *
+     * This method updates the status of a message. It accepts either a Message instance
+     * or a message ID (integer) and updates the status field in the database.
+     *
+     * @param Message|int $message The Message model instance or message ID to update.
+     * @param User|int $user The user instance or its ID to mark the message as read.
+     * @param string $param The new status value to set for the message.
+     *
+     * @return ReadBy Readby instance that related to both conversation and message.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the message ID does not exist in the database.
+     */
+    public static function markMessageAsRead(Message|int $message, User|int $user, string $param): ReadBy
+    {
+        if (is_int($message)) {
+            $message = self::getMessageInstance($message);
+        }
+
+        if (is_int($user)) {
+            $user = self::getUserInstance($user);
+        }
+
+        if ($message instanceof Message) {
+            return ReadBy::create([
+                'conversation_id' => $message->conversation->id,
+                'message_id' => $message->id,
+                'user_id' => $user->id,
+            ]);
+        } else {
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException('Invalid message ID.');
+        }
     }
 
     /**
@@ -173,7 +212,7 @@ class Convo
      */
     public static function getConversationByTitle(string $title): ?Conversation
     {
-        return Conversation::with(['users','messages'])->where('title', $title)->first();
+        return Conversation::with(['users', 'messages'])->where('title', $title)->first();
     }
 
     /**
@@ -231,7 +270,7 @@ class Convo
 
         event(new MessageSent($message));
 
-        $message->load('user','conversation','attachments','readBy');
+        $message->load('user', 'conversation', 'attachments', 'readBy');
 
         return $message;
     }

@@ -2,7 +2,6 @@
 
 namespace Emincmg\ConvoLite\Models;
 
-use Emincmg\ConvoLite\Traits\Conversation\SetsStatus;
 use Emincmg\ConvoLite\Traits\Conversation\SetsTitle;
 use Emincmg\ConvoLite\Traits\Message\SendsMessage;
 use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
@@ -10,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use SendsMessage, SetsTitle, SetsStatus, HasReadBy;
+    use SendsMessage, SetsTitle, HasReadBy;
 
     protected $fillable = [
         'title',
