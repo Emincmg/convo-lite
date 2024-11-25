@@ -21,8 +21,6 @@ Run the migrations to create the necessary database tables:
 php artisan migrate
 ```
 
-# Configuration
-
 Publish the package's publishable files by running the following command:
 
 ```bash
@@ -30,10 +28,14 @@ php artisan vendor:publish --provider="Emincmg\ConvoLite\Providers\ConversationS
 ```
 
 This will publish the migration fies to your applications `database/migrations` folder, and config file to your applications `config` folder.
+# Configuration
+
 
 ### Changing Default Model
 
 You can change the default model for creating conversations between them through `config/convo_lite.php`
+
+config file should be already published upon triggering ```vendor:publish``` command
 
 ```php
 'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
