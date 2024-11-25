@@ -222,5 +222,7 @@ php artisan queue:work --queue=convo-lite.mail,convo-lite.broadcast,default
 
 For broadcasting to work, `default` queue worker should be always started.
 
+# Licence
+
 Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
 
