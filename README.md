@@ -1,7 +1,12 @@
-
+<br>
+<br>
+<br>
 <div style="margin: 100px 50px;">
     <img src="convo-lite.png" alt="convo-lite-logo">
 </div>
+<br>
+<br>
+<br>
 
 Convo Lite is a package that allows you to easily create and manage chat rooms in your Laravel application. This package
 enables your users to communicate with each other.
