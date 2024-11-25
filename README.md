@@ -48,14 +48,19 @@ this field.
 
 All translation files are published to `lang/vendor/convo_lite` folder and the language's abbreviation (e.g. /en for English).
 
-config file should be already published upon triggering ```vendor:publish``` command.
-
 ```php
-'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
+return [
+    'new_message_subject' => 'New message notification from :sender',
+    'greeting' => 'Dear :name,',
+    'new_message_line' => 'You\'ve got a new message from :sender.',
+    'click_to_view' => 'Click the button below to view.',
+    'view_details' => 'Details',
+    'best_regards' => 'Best Regards,',
+    'slack_message' => 'You\'ve got a new message from :sender.',
+    'view_message' => 'View Message',
+    'sms_message' => 'You\'ve got a new message from :sender.',
+];
 ```
-
-This defaults to your applications default model, so you can change that or if you only change for this package change
-this field.
 
 # Usage
 
