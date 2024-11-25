@@ -44,6 +44,19 @@ config file should be already published upon triggering ```vendor:publish``` com
 This defaults to your applications default model, so you can change that or if you only change for this package change
 this field.
 
+### Localization
+
+All translation files are published to `lang/vendor/convo_lite` folder and the language's abbreviation (e.g. /en for English).
+
+config file should be already published upon triggering ```vendor:publish``` command.
+
+```php
+'user_model' => config('auth.providers.users.model','App\\Models\\User.php'),
+```
+
+This defaults to your applications default model, so you can change that or if you only change for this package change
+this field.
+
 # Usage
 
 To start using Convo Lite, you can add some basic routes and controller methods to manage conversations and messages.
