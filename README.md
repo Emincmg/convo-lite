@@ -224,5 +224,5 @@ For broadcasting to work, `default` queue worker should be always started.
 
 # Licence
 
-Convo Lite is open-source software licensed under the [MIT license](LICENSE.md).
+Convo Lite is open-source software licensed under the [MIT license](LICENSE).
 
