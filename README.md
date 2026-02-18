@@ -41,7 +41,7 @@ This will publish the migration fies to your applications `database/migrations` 
 
 ### Changing Default Model
 
-You can change the default model for creating conversations between them through `config/convo_lite.php`
+You can change the default model for creating conversations between them through `config/convo-lite.php`
 
 config file should be already published upon triggering ```vendor:publish``` command
 
@@ -54,7 +54,7 @@ this field.
 
 ### Localization
 
-All translation files are published to `lang/vendor/convo_lite` folder and the language's abbreviation (e.g. /en for English).
+All translation files are published to `lang/vendor/convo-lite` folder and the language's abbreviation (e.g. /en for English).
 
 ```php
 return [
@@ -203,7 +203,7 @@ Events are broadcasted to the private channels of the users : `user + id (eg use
 
 ### Queues
 
-Events are pushed to the `queues` specified in the `config/convo_lite.php` file
+Events are pushed to the `queues` specified in the `config/convo-lite.php` file
 
 ```php
 'queues' => [
@@ -221,6 +221,125 @@ php artisan queue:work --queue=convo-lite.mail,convo-lite.broadcast,default
 ```
 
 For broadcasting to work, `default` queue worker should be always started.
+
+# Vue Frontend
+
+Convo Lite includes ready-to-use Vue 3 components for a complete chat interface.
+
+### Publishing Vue Components
+
+```bash
+php artisan vendor:publish --tag=convo-lite-vue
+```
+
+This will publish:
+- `resources/js/components/ConvoLite/` - Vue components
+- `resources/js/composables/useConvo.js` - Composable for API calls
+- `resources/js/convo-lite.js` - Entry point
+
+### Basic Usage
+
+```vue
+<template>
+  <ConvoChat
+    :current-user-id="userId"
+    api-base-url="/api/convo-lite"
+    class="h-[600px]"
+  />
+</template>
+
+<script setup>
+import { ConvoChat } from './convo-lite'
+
+const userId = 1 // Current authenticated user ID
+</script>
+```
+
+### Using as Vue Plugin
+
+```js
+// app.js
+import { createApp } from 'vue'
+import ConvoLite from './convo-lite'
+
+const app = createApp(App)
+app.use(ConvoLite, { prefix: 'Convo' })
+app.mount('#app')
+```
+
+Then use components globally:
+
+```vue
+<ConvoChat :current-user-id="userId" />
+```
+
+### Using the Composable
+
+```js
+import { useConvo } from './composables/useConvo'
+
+const {
+  conversations,
+  messages,
+  loading,
+  fetchConversations,
+  sendMessage,
+  addReaction
+} = useConvo({ baseUrl: '/api/convo-lite' })
+
+// Fetch conversations
+await fetchConversations()
+
+// Send a message
+await sendMessage(conversationId, 'Hello!', [], replyToId)
+```
+
+### Available Components
+
+| Component | Description |
+|-----------|-------------|
+| `ConvoChat` | Full chat interface with sidebar and chat window |
+| `ConversationList` | List of conversations |
+| `ChatWindow` | Message display and input area |
+| `MessageItem` | Single message bubble |
+| `MessageInput` | Text input with file attachment |
+| `TypingIndicator` | Typing animation |
+| `OnlineIndicator` | Online status dot |
+
+### Broadcasting Setup
+
+Add these channel definitions to your `routes/channels.php`:
+
+```php
+Broadcast::channel('user.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('convo-lite.online', function ($user) {
+    return ['id' => $user->id, 'name' => $user->name];
+});
+```
+
+### Styling
+
+Components use Tailwind CSS classes. Make sure Tailwind is configured in your project, or override styles as needed.
+
+# API Endpoints
+
+The package provides these REST endpoints (prefix: `/api/convo-lite`):
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/conversations` | List user's conversations |
+| POST | `/conversations` | Create new conversation |
+| GET | `/conversations/{id}/messages` | Get messages (paginated) |
+| POST | `/conversations/{id}/messages` | Send message |
+| POST | `/conversations/{id}/typing` | Broadcast typing status |
+| PUT | `/messages/{id}` | Edit message |
+| DELETE | `/messages/{id}` | Delete message |
+| POST | `/messages/{id}/read` | Mark as read |
+| POST | `/messages/{id}/reactions` | Add reaction |
+| DELETE | `/messages/{id}/reactions` | Remove reaction |
 
 # Licence
 
