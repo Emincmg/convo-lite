@@ -6,10 +6,11 @@ use Emincmg\ConvoLite\Traits\Conversation\SetsTitle;
 use Emincmg\ConvoLite\Traits\Message\SendsMessage;
 use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conversation extends Model
 {
-    use SendsMessage, SetsTitle, HasReadBy;
+    use SendsMessage, SetsTitle, HasReadBy, SoftDeletes;
 
     protected $fillable = [
         'title',

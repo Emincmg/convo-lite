@@ -2,24 +2,19 @@
 
 namespace Emincmg\ConvoLite\Models;
 
-use Emincmg\ConvoLite\Traits\Message\AttachesFiles;
 use Emincmg\ConvoLite\Traits\Relationships\HasReadBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attachment extends Model
 {
-    use AttachesFiles, HasReadBy;
+    use HasReadBy, SoftDeletes;
 
-    /**
-     * Get the attributes that can be assigned.
-     * @var string[]
-     */
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'user_id',
         'conversation_id',
         'message_id',
-        'name',
         'full_path',
         'storage_path',
         'public_path',

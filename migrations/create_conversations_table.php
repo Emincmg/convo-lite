@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
             $table->string('title')->nullable();
             $table->string('status')->default('new');
             $table->boolean('has_unread_message')->default(true);

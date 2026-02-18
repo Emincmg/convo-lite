@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
             $table->text('body')->nullable();
 
             $table->unsignedBigInteger('conversation_id');
             $table->unsignedBigInteger('attachment_id')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('reply_to_id')->nullable();
+
+            $table->foreign('reply_to_id')->references('id')->on('messages')->onDelete('set null');
         });
     }
 
