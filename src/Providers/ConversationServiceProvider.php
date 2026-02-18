@@ -2,9 +2,7 @@
 
 namespace Emincmg\ConvoLite\Providers;
 
-use Emincmg\ConvoLite\Commands\PublishMigrationsCommand;
 use Emincmg\ConvoLite\Convo;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class ConversationServiceProvider extends ServiceProvider
@@ -28,48 +26,63 @@ class ConversationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'convo-lite');
+
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../../config/convo-lite.php' => config_path('convo-lite.php'),
-            ], 'config');
-
-            $now = now();
-            $this->publishes([
-                __DIR__ . '/../../migrations/create_conversations_table.php' =>
-                    $this->app->databasePath('migrations' .
-                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_conversations_table.php'),
-            ], 'migrations');
-
-            $now->addSecond();
-            $this->publishes([
-                __DIR__ . '/../../migrations/create_conversation_user_table.php' =>
-                    $this->app->databasePath('migrations' .
-                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_conversation_user_table.php'),
-            ], 'migrations');
-
-            $now->addSecond();
-            $this->publishes([
-                __DIR__ . '/../../migrations/create_messages_table.php' =>
-                    $this->app->databasePath('migrations' .
-                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_messages_table.php'),], 'migrations');
-
-            $now->addSecond();
-            $this->publishes([
-                __DIR__ . '/../../migrations/create_attachments_table.php' =>
-                    $this->app->databasePath('migrations' .
-                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_attachments_table.php'),], 'migrations');
-
-            $now->addSecond();
-            $this->publishes([
-                __DIR__ . '/../../migrations/create_convo_read_by_table.php' =>
-                    $this->app->databasePath('migrations' .
-                        DIRECTORY_SEPARATOR . $now->format('Y_m_d_His') . '_create_convo_read_by_table.php'),], 'migrations');
-
-            $this->loadTranslationsFrom(__DIR__ . '../../lang', 'convo-lite');
-
-            $this->publishes([
-                __DIR__ . '/../../lang' => $this->app->langPath('vendor/convo-lite'),
-            ]);
+            $this->registerPublishables();
         }
+    }
+
+    private function registerPublishables(): void
+    {
+        // Config
+        $this->publishes([
+            __DIR__ . '/../../config/convo-lite.php' => config_path('convo-lite.php'),
+        ], 'convo-lite-config');
+
+        // Migrations
+        $now = now();
+        $migrations = [
+            'create_conversations_table',
+            'create_conversation_user_table',
+            'create_messages_table',
+            'create_attachments_table',
+            'create_convo_read_by_table',
+            'create_convo_reactions_table',
+        ];
+
+        foreach ($migrations as $migration) {
+            $this->publishes([
+                __DIR__ . "/../../migrations/{$migration}.php" =>
+                    $this->app->databasePath('migrations/' . $now->format('Y_m_d_His') . "_{$migration}.php"),
+            ], 'convo-lite-migrations');
+            $now->addSecond();
+        }
+
+        // Language files
+        $this->publishes([
+            __DIR__ . '/../../lang' => $this->app->langPath('vendor/convo-lite'),
+        ], 'convo-lite-lang');
+
+        // Vue components
+        $this->publishes([
+            __DIR__ . '/../../resources/js/components/ConvoLite' => resource_path('js/components/ConvoLite'),
+        ], 'convo-lite-vue');
+
+        // Composables
+        $this->publishes([
+            __DIR__ . '/../../resources/js/composables' => resource_path('js/composables'),
+        ], 'convo-lite-vue');
+
+        // Entry point
+        $this->publishes([
+            __DIR__ . '/../../resources/js/convo-lite.js' => resource_path('js/convo-lite.js'),
+        ], 'convo-lite-vue');
+
+        // Routes (for customization)
+        $this->publishes([
+            __DIR__ . '/../../routes/api.php' => base_path('routes/convo-lite.php'),
+        ], 'convo-lite-routes');
     }
 }
