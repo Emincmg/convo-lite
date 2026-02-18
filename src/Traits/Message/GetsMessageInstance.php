@@ -1,20 +1,27 @@
 <?php
+
 namespace Emincmg\ConvoLite\Traits\Message;
 
-use Emincmg\ConvoLite\Http\Controllers\Models\Conversation;
-use Emincmg\ConvoLite\Traits\User;
-use function Emincmg\ConvoLite\Traits\config;
+use Emincmg\ConvoLite\Exceptions\MessageNotFoundException;
+use Emincmg\ConvoLite\Models\Message;
 
 trait GetsMessageInstance
 {
     /**
-     * Retrieve the conversation instance based on the provided user ID.
+     * Retrieve the message instance based on the provided ID.
      *
      * @param int $messageId The ID of the message.
-     * @return \Emincmg\ConvoLite\Models\Message|null The message instance if found, or null if not found.
+     * @return Message The message instance.
+     * @throws MessageNotFoundException If no message is found with the given ID.
      */
-    private static function getMessageInstance(int $messageId): ?\Emincmg\ConvoLite\Models\Message
+    private static function getMessageInstance(int $messageId): Message
     {
-        return \Emincmg\ConvoLite\Models\Message::find($messageId);
+        $message = Message::find($messageId);
+
+        if (!$message) {
+            throw new MessageNotFoundException($messageId);
+        }
+
+        return $message;
     }
 }
